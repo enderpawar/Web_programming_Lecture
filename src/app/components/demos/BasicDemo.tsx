@@ -1,6 +1,69 @@
 import { useEffect, useRef, useState } from 'react';
 
-function IntersectionDemo() {
+/* ───────────── 10번 슬라이드 개별 미리보기 ───────────── */
+
+function TransitionPreview() {
+  return (
+    <div className="flex flex-wrap gap-4 items-center">
+      <button className="px-5 py-2.5 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-800 hover:scale-105 transition-all duration-300 cursor-pointer">
+        color + scale
+      </button>
+      <div className="w-24 h-24 bg-gray-100 rounded-xl cursor-pointer hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex items-center justify-center text-xs font-mono text-gray-500">
+        shadow + lift
+      </div>
+      <button className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm rounded hover:opacity-20 transition-opacity duration-500 cursor-pointer">
+        opacity
+      </button>
+    </div>
+  );
+}
+
+function AnimationPreview() {
+  return (
+    <div className="flex flex-wrap gap-8 items-center">
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-orange-400 rounded-full animate-spin" />
+        <span className="text-xs font-mono text-gray-500">spin</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-5 h-5 bg-orange-400 rounded-full animate-ping" />
+        <span className="text-xs font-mono text-gray-500">ping</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-24 h-10 bg-gray-950 rounded text-white text-xs font-mono flex items-center justify-center animate-pulse">
+          pulse
+        </div>
+        <span className="text-xs font-mono text-gray-500">pulse</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="text-sm font-mono text-gray-700 animate-bounce">↕</div>
+        <span className="text-xs font-mono text-gray-500">bounce</span>
+      </div>
+    </div>
+  );
+}
+
+function TransformPreview() {
+  return (
+    <div className="flex flex-wrap gap-4">
+      {[
+        { label: 'scale', cls: 'hover:scale-125' },
+        { label: 'rotate', cls: 'hover:rotate-45' },
+        { label: 'skew', cls: 'hover:skew-x-12' },
+        { label: 'translate', cls: 'hover:translate-x-3 hover:-translate-y-3' },
+      ].map(({ label, cls }) => (
+        <div
+          key={label}
+          className={`w-20 h-20 bg-gray-950 text-white rounded-lg flex items-center justify-center text-xs font-mono cursor-pointer transition-transform duration-300 ${cls}`}
+        >
+          {label}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function IntersectionPreview() {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -14,36 +77,178 @@ function IntersectionDemo() {
   }, []);
 
   return (
-    <div>
-      <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">④ Intersection Observer — 스크롤 reveal</p>
-      <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 overflow-hidden">
-        <p className="text-xs text-gray-400 font-mono mb-4">아래 박스들은 화면에 들어오면 나타납니다</p>
-        <div className="space-y-3">
-          {['첫 번째 요소', '두 번째 요소', '세 번째 요소'].map((label, i) => (
-            <div
-              key={i}
-              ref={i === 0 ? ref : undefined}
-              style={{ transitionDelay: `${i * 150}ms` }}
-              className={`px-5 py-3 bg-gray-950 text-white text-sm font-medium rounded transition-all duration-500 ${
-                visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-              }`}
-            >
-              {label}
-            </div>
+    <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 overflow-hidden">
+      <p className="text-xs text-gray-400 font-mono mb-4">아래 박스들은 화면에 들어오면 나타납니다</p>
+      <div className="space-y-3">
+        {['첫 번째 요소', '두 번째 요소', '세 번째 요소'].map((label, i) => (
+          <div
+            key={i}
+            ref={i === 0 ? ref : undefined}
+            style={{ transitionDelay: `${i * 150}ms` }}
+            className={`px-5 py-3 bg-gray-950 text-white text-sm font-medium rounded transition-all duration-500 ${
+              visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+            }`}
+          >
+            {label}
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={() => setVisible(false)}
+        className="mt-4 text-xs font-mono text-gray-400 hover:text-gray-700 underline"
+      >
+        다시 실행
+      </button>
+    </div>
+  );
+}
+
+/* ───────────── 17번 슬라이드 개별 컴포넌트 미리보기 ───────────── */
+
+function NavPreview() {
+  return (
+    <div className="rounded-lg overflow-hidden border border-gray-200">
+      <nav className="flex items-center justify-between px-6 py-3 bg-gray-950 text-white">
+        <span className="font-bold text-sm">MyApp</span>
+        <ul className="flex gap-6 text-sm list-none m-0 p-0">
+          {['홈', '소개', '작업'].map((item, i) => (
+            <li key={item}>
+              <a href="#" className={`no-underline transition-colors ${i === 0 ? 'text-white font-semibold' : 'text-gray-400 hover:text-white'}`}>
+                {item}
+              </a>
+            </li>
           ))}
+        </ul>
+        <button className="text-xs bg-orange-400 text-gray-950 font-bold px-3 py-1.5 rounded">시작하기</button>
+      </nav>
+    </div>
+  );
+}
+
+function BreadcrumbPreview() {
+  const items = ['홈', '상품', '운동화'];
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <ol className="flex items-center gap-1.5 text-sm list-none m-0 p-0">
+        {items.map((item, i) => (
+          <li key={item} className="flex items-center gap-1.5">
+            {i < items.length - 1 ? (
+              <>
+                <a href="#" className="text-gray-600 hover:underline">{item}</a>
+                <span className="text-gray-300">/</span>
+              </>
+            ) : (
+              <span className="text-gray-900 font-semibold">{item}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function ModalPreview() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-3">
+      <button
+        onClick={() => setOpen(true)}
+        className="px-4 py-2 bg-gray-950 text-white text-sm font-medium rounded hover:bg-gray-800 transition-colors"
+      >
+        모달 열기
+      </button>
+      <span className="text-xs text-gray-400 font-mono">버튼을 클릭해보세요</span>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setOpen(false)}>
+          <div className="bg-white rounded-xl p-7 max-w-sm w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">정말 삭제할까요?</h3>
+            <p className="text-sm text-gray-500 mb-6">이 작업은 되돌릴 수 없습니다.</p>
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setOpen(false)} className="px-4 py-2 text-sm border border-gray-200 rounded hover:bg-gray-50 transition-colors">취소</button>
+              <button onClick={() => setOpen(false)} className="px-4 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors">삭제</button>
+            </div>
+          </div>
         </div>
-        <button
-          onClick={() => setVisible(false)}
-          className="mt-4 text-xs font-mono text-gray-400 hover:text-gray-700 underline"
-        >
-          다시 실행
-        </button>
+      )}
+    </div>
+  );
+}
+
+function CardPreview() {
+  return (
+    <div className="max-w-xs border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white">
+      <div className="h-36 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+        <span className="text-gray-400 text-sm font-mono">thumbnail.jpg</span>
+      </div>
+      <div className="p-5">
+        <div className="flex gap-2 mb-3">
+          <span className="text-xs font-semibold bg-green-100 text-green-800 px-2.5 py-0.5 rounded-full">완료</span>
+          <span className="text-xs font-semibold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">React</span>
+        </div>
+        <h3 className="font-bold text-gray-900 mb-1">프로젝트 제목</h3>
+        <p className="text-sm text-gray-500">간단한 설명이 들어갑니다.</p>
       </div>
     </div>
   );
 }
 
-export function BasicDemo({ slideId }: { slideId: string }) {
+function SkeletonPreview() {
+  return (
+    <div className="max-w-xs border border-gray-200 rounded-xl overflow-hidden bg-white">
+      <div className="h-36 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-pulse" />
+      <div className="p-5 space-y-3">
+        <div className="h-3 bg-gray-200 rounded animate-pulse w-3/4" />
+        <div className="h-3 bg-gray-200 rounded animate-pulse w-full" />
+        <div className="h-3 bg-gray-200 rounded animate-pulse w-1/2" />
+      </div>
+    </div>
+  );
+}
+
+function PaginationPreview() {
+  const [current, setCurrent] = useState(2);
+  const pages = [1, 2, 3, 4, 5];
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <nav className="flex items-center gap-1">
+        <button
+          onClick={() => setCurrent(p => Math.max(1, p - 1))}
+          disabled={current === 1}
+          className="min-w-[36px] h-9 px-2 border border-gray-200 rounded text-sm bg-white disabled:opacity-40 hover:bg-gray-100 transition-colors"
+        >‹ 이전</button>
+        {pages.map(p => (
+          <button
+            key={p}
+            onClick={() => setCurrent(p)}
+            className={`min-w-[36px] h-9 border rounded text-sm transition-colors ${
+              current === p ? 'bg-gray-950 text-white border-gray-950' : 'bg-white border-gray-200 hover:bg-gray-100'
+            }`}
+          >{p}</button>
+        ))}
+        <button
+          onClick={() => setCurrent(p => Math.min(5, p + 1))}
+          disabled={current === 5}
+          className="min-w-[36px] h-9 px-2 border border-gray-200 rounded text-sm bg-white disabled:opacity-40 hover:bg-gray-100 transition-colors"
+        >다음 ›</button>
+      </nav>
+    </div>
+  );
+}
+
+const demoComponents: Record<string, JSX.Element> = {
+  '10-transition':   <TransitionPreview />,
+  '10-animation':    <AnimationPreview />,
+  '10-transform':    <TransformPreview />,
+  '10-intersection': <IntersectionPreview />,
+  '17-nav':          <NavPreview />,
+  '17-breadcrumb':   <BreadcrumbPreview />,
+  '17-modal':        <ModalPreview />,
+  '17-card':         <CardPreview />,
+  '17-skeleton':     <SkeletonPreview />,
+  '17-pagination':   <PaginationPreview />,
+};
+
+export function BasicDemo({ slideId, demoId }: { slideId: string; demoId?: string }) {
   const demoContent: Record<string, JSX.Element> = {
     '02': (
       <div className="bg-white rounded-xl p-8 border-2 border-blue-200">
@@ -244,61 +449,6 @@ export function BasicDemo({ slideId }: { slideId: string }) {
         </div>
       </div>
     ),
-    '10': (
-      <div className="bg-white rounded-xl p-8 border border-gray-200 space-y-10">
-        {/* ① Transition */}
-        <div>
-          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">① Transition — hover해보세요</p>
-          <div className="flex flex-wrap gap-4">
-            <button className="px-5 py-2.5 bg-gray-950 text-white text-sm font-medium rounded hover:bg-orange-400 hover:text-gray-950 transition-colors duration-300">
-              color
-            </button>
-            <div className="w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex items-center justify-center text-xs font-mono text-gray-600">
-              shadow
-            </div>
-            <button className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm rounded hover:opacity-30 transition-opacity duration-500">
-              opacity
-            </button>
-          </div>
-        </div>
-
-        {/* ② Animation */}
-        <div>
-          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">② Animation @keyframes</p>
-          <div className="flex flex-wrap gap-6 items-center">
-            <div className="w-9 h-9 border-4 border-gray-200 border-t-orange-400 rounded-full animate-spin" />
-            <div className="w-4 h-4 bg-orange-400 rounded-full animate-ping" />
-            <div className="w-24 h-9 bg-gray-950 rounded text-white text-xs font-mono flex items-center justify-center animate-pulse">
-              pulse
-            </div>
-            <div className="text-sm font-mono text-gray-700 animate-bounce">bounce ↕</div>
-          </div>
-        </div>
-
-        {/* ③ Transform */}
-        <div>
-          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">③ Transform — hover해보세요</p>
-          <div className="flex flex-wrap gap-4">
-            {[
-              { label: 'scale', cls: 'hover:scale-125' },
-              { label: 'rotate', cls: 'hover:rotate-45' },
-              { label: 'skew', cls: 'hover:skew-x-12' },
-              { label: 'translate', cls: 'hover:translate-x-4 hover:-translate-y-4' },
-            ].map(({ label, cls }) => (
-              <div
-                key={label}
-                className={`w-20 h-20 bg-gray-950 text-white rounded-lg flex items-center justify-center text-xs font-mono cursor-pointer transition-transform duration-300 ${cls}`}
-              >
-                {label}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ④ Intersection Observer */}
-        <IntersectionDemo />
-      </div>
-    ),
     '14': (
       <div className="bg-white rounded-xl p-8 border-2 border-cyan-200">
         <h3 className="text-xl font-bold text-gray-800 mb-4">DOM 조작 예시</h3>
@@ -364,5 +514,16 @@ export function BasicDemo({ slideId }: { slideId: string }) {
     ),
   };
 
-  return demoContent[slideId] || null;
+  const content = demoId && demoComponents[demoId]
+    ? demoComponents[demoId]
+    : demoContent[slideId] ?? null;
+
+  if (!content) return null;
+
+  return (
+    <div className="rounded-xl border border-orange-100 bg-orange-50/40 p-4">
+      <p className="font-mono text-xs text-orange-400 tracking-widest uppercase mb-3">미리보기</p>
+      {content}
+    </div>
+  );
 }

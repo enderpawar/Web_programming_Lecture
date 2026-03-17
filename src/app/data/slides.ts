@@ -13,6 +13,7 @@ export interface SlideSection {
   code?: string;
   language?: string;
   demo?: React.ComponentType;
+  demoId?: string;
 }
 
 export const slides: Slide[] = [
@@ -431,6 +432,7 @@ button:active {
 }`,
         language: 'css',
       },
+      { type: 'demo', demoId: '10-transition' },
       {
         type: 'code',
         title: '② Animation & @keyframes',
@@ -454,6 +456,7 @@ button:active {
 .badge   { animation: pulse 2s ease-in-out infinite; }`,
         language: 'css',
       },
+      { type: 'demo', demoId: '10-animation' },
       {
         type: 'code',
         title: '③ Transform — 이동 / 확대 / 회전 / 기울이기',
@@ -481,6 +484,7 @@ button:active {
 }`,
         language: 'css',
       },
+      { type: 'demo', demoId: '10-transform' },
       {
         type: 'code',
         title: '④ Intersection Observer — 스크롤 reveal 효과',
@@ -520,9 +524,7 @@ document.querySelectorAll('.reveal').forEach(el => {
 });`,
         language: 'javascript',
       },
-      {
-        type: 'demo',
-      },
+      { type: 'demo', demoId: '10-intersection' },
     ],
   },
   {
@@ -852,6 +854,7 @@ document.addEventListener('keydown', (event) => {
       {
         type: 'code',
         title: 'NAV — 상단 탐색 바',
+        demoId: '17-nav',
         code: `<nav class="navbar">
   <a class="logo" href="/">MyApp</a>
 
@@ -882,9 +885,11 @@ document.addEventListener('keydown', (event) => {
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-nav' },
       {
         type: 'code',
         title: 'Breadcrumb — 경로 표시',
+        demoId: '17-breadcrumb',
         code: `<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li><a href="/">홈</a></li>
@@ -911,9 +916,11 @@ document.addEventListener('keydown', (event) => {
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-breadcrumb' },
       {
         type: 'code',
         title: 'Modal / Dialog — 팝업 레이어',
+        demoId: '17-modal',
         code: `<!-- 오버레이 + 다이얼로그 구조 -->
 <div class="modal-overlay" id="overlay">
   <div class="modal" role="dialog" aria-modal="true">
@@ -943,9 +950,11 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-modal' },
       {
         type: 'code',
         title: 'Card — 콘텐츠 묶음 / Badge — 라벨',
+        demoId: '17-card',
         code: `<div class="card">
   <img src="thumbnail.jpg" alt="썸네일" class="card-img" />
   <div class="card-body">
@@ -979,9 +988,11 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-card' },
       {
         type: 'code',
         title: 'Skeleton — 로딩 자리 표시자',
+        demoId: '17-skeleton',
         code: `<div class="card skeleton-card">
   <div class="skeleton skeleton-img"></div>
   <div class="skeleton-body">
@@ -1010,9 +1021,11 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-skeleton' },
       {
         type: 'code',
         title: 'Pagination — 페이지 이동',
+        demoId: '17-pagination',
         code: `<nav class="pagination" aria-label="페이지 이동">
   <button class="page-btn" disabled>‹ 이전</button>
 
@@ -1040,6 +1053,7 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
 </style>`,
         language: 'html',
       },
+      { type: 'demo', demoId: '17-pagination' },
       {
         type: 'code',
         title: 'FAB & Toast — 고정 버튼 / 알림',

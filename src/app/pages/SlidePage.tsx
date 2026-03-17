@@ -251,7 +251,9 @@ export function SlidePage() {
                   {section.type === 'interactive' && slideId === '17' && <FABToastDemo />}
                   {section.type === 'error' && <ErrorDemo />}
                   {section.type === 'demo' && slideId === '19' && <TodoDemo />}
-                  {section.type === 'demo' && slideId !== '19' && <BasicDemo slideId={slideId || ''} />}
+                  {section.type === 'demo' && slideId !== '19' && (
+                    <BasicDemo slideId={slideId || ''} demoId={section.demoId} />
+                  )}
                 </motion.div>
               ))}
             </div>

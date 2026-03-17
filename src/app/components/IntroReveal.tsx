@@ -62,7 +62,7 @@ export function IntroReveal({ children, replay, onReplayDone }: IntroRevealProps
               transition={{ duration: 1.8, delay: 0.2, times: [0, 0.2, 0.7, 1] }}
             >
               <p className="font-mono text-xs tracking-[0.3em] text-orange-400 uppercase mb-4">
-                GRE STUDIO
+                NL WEB PROGRAMMING
               </p>
               <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight leading-none">
                 WEB<br />
