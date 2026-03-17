@@ -393,9 +393,143 @@ button:active {
   },
   {
     id: '10',
+    title: 'CSS 애니메이션 총정리',
+    description: 'transition, animation, transform, Intersection Observer까지 CSS/JS 움직임 전체를 배웁니다',
+    category: '#10',
+    sections: [
+      {
+        type: 'text',
+        title: 'CSS 움직임의 4가지 핵심',
+        content: `웹에서 움직임을 만드는 방법은 크게 4가지입니다.
+
+① transition — 상태 변화(hover 등)를 부드럽게 연결
+② animation + @keyframes — 독립적으로 반복 실행되는 움직임
+③ transform — 요소를 이동·확대·회전·기울이기
+④ Intersection Observer — 스크롤 시 요소가 화면에 들어오면 애니메이션 실행`,
+      },
+      {
+        type: 'code',
+        title: '① Transition',
+        code: `/* transition: 속성 시간 easing 지연 */
+.button {
+  background-color: #3b82f6;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* 카드 hover 효과 */
+.card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+}`,
+        language: 'css',
+      },
+      {
+        type: 'code',
+        title: '② Animation & @keyframes',
+        code: `@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.1); }
+}
+
+/* animation: 이름 시간 easing 반복횟수 */
+.fade-in { animation: fadeIn 0.6s ease forwards; }
+.loader  { animation: spin 1s linear infinite; }
+.badge   { animation: pulse 2s ease-in-out infinite; }`,
+        language: 'css',
+      },
+      {
+        type: 'code',
+        title: '③ Transform — 이동 / 확대 / 회전 / 기울이기',
+        code: `/* 2D Transform */
+.translate { transform: translate(50px, 20px); }  /* X, Y 이동 */
+.scale     { transform: scale(1.5); }              /* 1.5배 확대 */
+.rotate    { transform: rotate(45deg); }           /* 45도 회전 */
+.skew      { transform: skew(15deg, 5deg); }       /* 기울이기 */
+
+/* 여러 개 동시에 */
+.card:hover {
+  transform: translateY(-8px) scale(1.02) rotate(1deg);
+}
+
+/* 3D Transform */
+.flip {
+  perspective: 600px;
+  transform: rotateY(180deg);
+}
+
+/* transform-origin: 기준점 변경 */
+.rotate-corner {
+  transform-origin: top left;
+  transform: rotate(30deg);
+}`,
+        language: 'css',
+      },
+      {
+        type: 'code',
+        title: '④ Intersection Observer — 스크롤 reveal 효과',
+        code: `/* CSS: 초기 상태 (숨김) */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* JS가 .visible 클래스를 붙여주면 보임 */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}`,
+        language: 'css',
+      },
+      {
+        type: 'code',
+        title: '④ Intersection Observer — JavaScript',
+        code: `const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // 화면에 들어오면 .visible 추가
+      entry.target.classList.add('visible');
+      // 한 번만 실행하려면 관찰 해제
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.2  // 20% 이상 보일 때 실행
+});
+
+// .reveal 클래스가 붙은 모든 요소 관찰 시작
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});`,
+        language: 'javascript',
+      },
+      {
+        type: 'demo',
+      },
+    ],
+  },
+  {
+    id: '11',
     title: '자바스크립트 소개',
     description: 'JavaScript 기초 문법과 데이터 타입을 배웁니다',
-    category: '#10',
+    category: '#11',
     sections: [
       {
         type: 'text',
@@ -429,10 +563,10 @@ console.log(typeof number); // "number"`,
     ],
   },
   {
-    id: '11',
+    id: '12',
     title: '변수 & 연산',
     description: '변수 선언과 다양한 연산자 사용법을 배웁니다',
-    category: '#11',
+    category: '#12',
     sections: [
       {
         type: 'text',
@@ -472,10 +606,10 @@ const message = \`이름: \${name}, 나이: \${age}\`; // 템플릿 리터럴`,
     ],
   },
   {
-    id: '12',
+    id: '13',
     title: '조건문 & 반복문',
     description: 'if문, switch문, for문, while문 등 제어 구조를 학습합니다',
-    category: '#12',
+    category: '#13',
     sections: [
       {
         type: 'text',
@@ -552,10 +686,10 @@ fruits.forEach((fruit, index) => {
     ],
   },
   {
-    id: '13',
+    id: '14',
     title: 'DOM 조작 기초',
     description: 'JavaScript로 HTML 요소를 선택하고 조작하는 방법을 배웁니다',
-    category: '#13',
+    category: '#14',
     sections: [
       {
         type: 'text',
@@ -615,10 +749,10 @@ document.body.appendChild(newDiv);`,
     ],
   },
   {
-    id: '14',
+    id: '15',
     title: '이벤트 처리',
     description: '클릭, 입력 등 사용자 상호작용을 처리하는 방법을 학습합니다',
-    category: '#14',
+    category: '#15',
     sections: [
       {
         type: 'text',
@@ -677,10 +811,10 @@ document.addEventListener('keydown', (event) => {
     ],
   },
   {
-    id: '15',
+    id: '16',
     title: '에러 & 문제 해결',
     description: '일반적인 에러와 디버깅 방법을 배웁니다',
-    category: '#15',
+    category: '#16',
     sections: [
       {
         type: 'text',
@@ -693,57 +827,257 @@ document.addEventListener('keydown', (event) => {
     ],
   },
   {
-    id: '16',
-    title: 'FAB & Toast UI',
-    description: '플로팅 액션 버튼과 토스트 알림 컴포넌트를 만듭니다',
-    category: '#16',
+    id: '17',
+    title: 'UI 컴포넌트 총정리',
+    description: 'NAV, Modal, Card, Badge, Skeleton 등 실무에서 자주 쓰는 UI 컴포넌트를 배웁니다',
+    category: '#17',
     sections: [
       {
         type: 'text',
-        title: '현대적인 UI 컴포넌트',
-        content: 'FAB(Floating Action Button)과 Toast 알림은 사용자 경험을 향상시키는 대표적인 UI 패턴입니다.',
+        title: '실무 UI 컴포넌트란?',
+        content: `웹 서비스는 수십 가지 반복적인 UI 패턴으로 이루어져 있습니다. 자주 쓰는 컴포넌트 이름과 구조를 알아두면 디자인 시스템을 이해하고 구현하는 속도가 빨라집니다.
+
+주요 컴포넌트 목록:
+• NAV (Navigation Bar) — 상단 탐색 메뉴
+• Breadcrumb — 현재 위치 경로 표시
+• Modal / Dialog — 팝업 레이어
+• Dropdown / Select — 선택 목록
+• Card — 콘텐츠 묶음 박스
+• Badge / Chip — 상태·카테고리 라벨
+• Toast / Snackbar — 일시적 알림 메시지
+• FAB (Floating Action Button) — 고정 액션 버튼
+• Skeleton — 로딩 중 자리 표시자
+• Pagination — 페이지 이동 컨트롤`,
       },
       {
         type: 'code',
-        title: 'FAB HTML 구조',
-        code: `<button class="fab" id="fabButton">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>
-</button>`,
+        title: 'NAV — 상단 탐색 바',
+        code: `<nav class="navbar">
+  <a class="logo" href="/">MyApp</a>
+
+  <ul class="nav-links">
+    <li><a href="/home" class="active">홈</a></li>
+    <li><a href="/about">소개</a></li>
+    <li><a href="/work">작업</a></li>
+  </ul>
+
+  <button class="nav-cta">시작하기</button>
+</nav>
+
+<style>
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #0a0a0a;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: #9ca3af; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: white; }
+</style>`,
         language: 'html',
       },
       {
         type: 'code',
-        title: 'FAB CSS',
-        code: `.fab {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
+        title: 'Breadcrumb — 경로 표시',
+        code: `<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="/">홈</a></li>
+    <li><a href="/products">상품</a></li>
+    <li aria-current="page">운동화</li>
+  </ol>
+</nav>
+
+<style>
+.breadcrumb {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 0.5rem;
+  list-style: none;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.breadcrumb li:not(:last-child)::after {
+  content: '/';
+  margin-left: 0.5rem;
+  color: #d1d5db;
+}
+.breadcrumb a { color: #374151; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+</style>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'Modal / Dialog — 팝업 레이어',
+        code: `<!-- 오버레이 + 다이얼로그 구조 -->
+<div class="modal-overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h2 class="modal-title">정말 삭제할까요?</h2>
+    <p class="modal-body">이 작업은 되돌릴 수 없습니다.</p>
+    <div class="modal-footer">
+      <button onclick="closeModal()">취소</button>
+      <button class="danger">삭제</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+}
+.modal {
+  background: white; border-radius: 12px;
+  padding: 2rem; max-width: 400px; width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.modal-footer { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 6px; }
+</style>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'Card — 콘텐츠 묶음 / Badge — 라벨',
+        code: `<div class="card">
+  <img src="thumbnail.jpg" alt="썸네일" class="card-img" />
+  <div class="card-body">
+    <div class="card-tags">
+      <span class="badge green">완료</span>
+      <span class="badge blue">React</span>
+    </div>
+    <h3 class="card-title">프로젝트 제목</h3>
+    <p class="card-desc">간단한 설명이 들어갑니다.</p>
+  </div>
+</div>
+
+<style>
+.card {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-4px); }
+.card-img { width: 100%; height: 160px; object-fit: cover; }
+.card-body { padding: 1.25rem; }
+.card-tags { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+
+/* Badge */
+.badge {
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.2rem 0.6rem; border-radius: 999px;
+}
+.badge.green { background: #dcfce7; color: #166534; }
+.badge.blue  { background: #dbeafe; color: #1e40af; }
+</style>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'Skeleton — 로딩 자리 표시자',
+        code: `<div class="card skeleton-card">
+  <div class="skeleton skeleton-img"></div>
+  <div class="skeleton-body">
+    <div class="skeleton skeleton-line w-3/4"></div>
+    <div class="skeleton skeleton-line w-full"></div>
+    <div class="skeleton skeleton-line w-1/2"></div>
+  </div>
+</div>
+
+<style>
+/* 반짝이는 로딩 효과 */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 }
 
-.fab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
 }
+.skeleton-img  { height: 160px; border-radius: 8px 8px 0 0; }
+.skeleton-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.skeleton-line { height: 14px; }
+</style>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'Pagination — 페이지 이동',
+        code: `<nav class="pagination" aria-label="페이지 이동">
+  <button class="page-btn" disabled>‹ 이전</button>
 
-.fab:active {
-  transform: scale(0.95);
-}`,
-        language: 'css',
+  <button class="page-btn">1</button>
+  <button class="page-btn active">2</button>
+  <button class="page-btn">3</button>
+  <span class="page-ellipsis">…</span>
+  <button class="page-btn">10</button>
+
+  <button class="page-btn">다음 ›</button>
+</nav>
+
+<style>
+.pagination { display: flex; align-items: center; gap: 0.25rem; }
+.page-btn {
+  min-width: 36px; height: 36px; padding: 0 0.5rem;
+  border: 1px solid #e5e7eb; border-radius: 6px;
+  background: white; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.page-btn:hover:not(:disabled) { background: #f3f4f6; }
+.page-btn.active { background: #0a0a0a; color: white; border-color: #0a0a0a; }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-ellipsis { padding: 0 0.25rem; color: #9ca3af; }
+</style>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'FAB & Toast — 고정 버튼 / 알림',
+        code: `<button class="fab" id="fabButton">＋</button>
+
+<div class="toast" id="toast">저장되었습니다 ✓</div>
+
+<script>
+document.getElementById('fabButton').addEventListener('click', () => {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+});
+</script>
+
+<style>
+.fab {
+  position: fixed; bottom: 2rem; right: 2rem;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #0a0a0a; color: white; font-size: 1.5rem;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.fab:hover { transform: scale(1.1); }
+
+.toast {
+  position: fixed; bottom: 5rem; right: 2rem;
+  background: #0a0a0a; color: white;
+  padding: 0.75rem 1.25rem; border-radius: 8px;
+  font-size: 0.875rem; opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+</style>`,
+        language: 'html',
       },
       {
         type: 'interactive',
@@ -751,10 +1085,10 @@ document.addEventListener('keydown', (event) => {
     ],
   },
   {
-    id: '17',
+    id: '18',
     title: '오늘 내용 정리',
     description: '배운 내용을 복습하고 정리합니다',
-    category: '#17',
+    category: '#18',
     sections: [
       {
         type: 'text',
@@ -788,10 +1122,10 @@ document.addEventListener('keydown', (event) => {
     ],
   },
   {
-    id: '18',
+    id: '19',
     title: '미니 프로젝트 - ToDo 앱',
     description: '배운 내용을 활용해 실제 ToDo 앱을 만들어봅니다',
-    category: '#18',
+    category: '#19',
     sections: [
       {
         type: 'text',

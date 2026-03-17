@@ -1,3 +1,48 @@
+import { useEffect, useRef, useState } from 'react';
+
+function IntersectionDemo() {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div>
+      <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">④ Intersection Observer — 스크롤 reveal</p>
+      <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 overflow-hidden">
+        <p className="text-xs text-gray-400 font-mono mb-4">아래 박스들은 화면에 들어오면 나타납니다</p>
+        <div className="space-y-3">
+          {['첫 번째 요소', '두 번째 요소', '세 번째 요소'].map((label, i) => (
+            <div
+              key={i}
+              ref={i === 0 ? ref : undefined}
+              style={{ transitionDelay: `${i * 150}ms` }}
+              className={`px-5 py-3 bg-gray-950 text-white text-sm font-medium rounded transition-all duration-500 ${
+                visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+              }`}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => setVisible(false)}
+          className="mt-4 text-xs font-mono text-gray-400 hover:text-gray-700 underline"
+        >
+          다시 실행
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function BasicDemo({ slideId }: { slideId: string }) {
   const demoContent: Record<string, JSX.Element> = {
     '02': (
@@ -199,7 +244,62 @@ export function BasicDemo({ slideId }: { slideId: string }) {
         </div>
       </div>
     ),
-    '13': (
+    '10': (
+      <div className="bg-white rounded-xl p-8 border border-gray-200 space-y-10">
+        {/* ① Transition */}
+        <div>
+          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">① Transition — hover해보세요</p>
+          <div className="flex flex-wrap gap-4">
+            <button className="px-5 py-2.5 bg-gray-950 text-white text-sm font-medium rounded hover:bg-orange-400 hover:text-gray-950 transition-colors duration-300">
+              color
+            </button>
+            <div className="w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex items-center justify-center text-xs font-mono text-gray-600">
+              shadow
+            </div>
+            <button className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm rounded hover:opacity-30 transition-opacity duration-500">
+              opacity
+            </button>
+          </div>
+        </div>
+
+        {/* ② Animation */}
+        <div>
+          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">② Animation @keyframes</p>
+          <div className="flex flex-wrap gap-6 items-center">
+            <div className="w-9 h-9 border-4 border-gray-200 border-t-orange-400 rounded-full animate-spin" />
+            <div className="w-4 h-4 bg-orange-400 rounded-full animate-ping" />
+            <div className="w-24 h-9 bg-gray-950 rounded text-white text-xs font-mono flex items-center justify-center animate-pulse">
+              pulse
+            </div>
+            <div className="text-sm font-mono text-gray-700 animate-bounce">bounce ↕</div>
+          </div>
+        </div>
+
+        {/* ③ Transform */}
+        <div>
+          <p className="font-mono text-xs text-orange-500 tracking-widest uppercase mb-3">③ Transform — hover해보세요</p>
+          <div className="flex flex-wrap gap-4">
+            {[
+              { label: 'scale', cls: 'hover:scale-125' },
+              { label: 'rotate', cls: 'hover:rotate-45' },
+              { label: 'skew', cls: 'hover:skew-x-12' },
+              { label: 'translate', cls: 'hover:translate-x-4 hover:-translate-y-4' },
+            ].map(({ label, cls }) => (
+              <div
+                key={label}
+                className={`w-20 h-20 bg-gray-950 text-white rounded-lg flex items-center justify-center text-xs font-mono cursor-pointer transition-transform duration-300 ${cls}`}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ④ Intersection Observer */}
+        <IntersectionDemo />
+      </div>
+    ),
+    '14': (
       <div className="bg-white rounded-xl p-8 border-2 border-cyan-200">
         <h3 className="text-xl font-bold text-gray-800 mb-4">DOM 조작 예시</h3>
         
@@ -232,7 +332,7 @@ export function BasicDemo({ slideId }: { slideId: string }) {
         </div>
       </div>
     ),
-    '14': (
+    '15': (
       <div className="bg-white rounded-xl p-8 border-2 border-violet-200">
         <h3 className="text-xl font-bold text-gray-800 mb-4">이벤트 처리 예시</h3>
         
