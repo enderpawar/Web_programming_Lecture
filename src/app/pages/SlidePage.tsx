@@ -64,20 +64,26 @@ export function SlidePage() {
   const progress = ((currentIndex + 1) / slides.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden">
-      {/* Animated Background Pattern */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-white relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="fixed inset-0 opacity-50">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(59, 130, 246, 0.02) 35px, rgba(59, 130, 246, 0.02) 70px)'
+        }}></div>
+      </div>
+
+      {/* Mesh Gradient Background */}
       <div className="fixed inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-[128px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-200 rounded-full mix-blend-multiply filter blur-[128px]"></div>
       </div>
 
       <KeyboardHint />
       
       {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200/50 backdrop-blur-sm z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50">
         <motion.div 
-          className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500"
+          className="h-full bg-gradient-to-r from-blue-600 to-cyan-500"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5 }}
@@ -85,23 +91,23 @@ export function SlidePage() {
       </div>
       
       {/* Header */}
-      <header className="bg-white/70 backdrop-blur-xl border-b border-purple-200/50 sticky top-0 z-40 shadow-lg">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-purple-100 rounded-xl transition-all hover:scale-110"
+                className="lg:hidden p-2 hover:bg-gray-100 rounded-xl transition-all"
               >
-                <Menu className="w-5 h-5 text-purple-600" />
+                <Menu className="w-5 h-5 text-blue-600" />
               </button>
               
               <Link
                 to="/"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg transition-all hover:scale-105 group"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700 transition-all group shadow-md"
               >
                 <Home className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                <span className="font-semibold hidden sm:inline">홈으로</span>
+                <span className="font-bold hidden sm:inline">홈으로</span>
               </Link>
             </div>
             
@@ -109,19 +115,19 @@ export function SlidePage() {
               {prevSlide && (
                 <Link
                   to={`/slide/${prevSlide.id}`}
-                  className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-purple-600 transition-all p-2 hover:bg-purple-100 rounded-xl group"
+                  className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-cyan-600 transition-all p-2 hover:bg-gray-100 rounded-xl group"
                 >
                   <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                   <span className="hidden sm:inline">이전</span>
                 </Link>
               )}
-              <div className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-bold text-sm shadow-md">
+              <div className="px-4 py-2 bg-blue-600 text-white rounded-lg font-bold text-sm shadow-md">
                 {currentIndex + 1} / {slides.length}
               </div>
               {nextSlide && (
                 <Link
                   to={`/slide/${nextSlide.id}`}
-                  className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-purple-600 transition-all p-2 hover:bg-purple-100 rounded-xl group"
+                  className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-cyan-600 transition-all p-2 hover:bg-gray-100 rounded-xl group"
                 >
                   <span className="hidden sm:inline">다음</span>
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -134,34 +140,34 @@ export function SlidePage() {
 
       <div className="flex relative">
         {/* Sidebar Navigation - Desktop */}
-        <aside className="hidden lg:block w-72 bg-white/70 backdrop-blur-xl border-r border-purple-200/50 min-h-[calc(100vh-73px)] sticky top-[73px] shadow-xl">
+        <aside className="hidden lg:block w-72 bg-white/80 backdrop-blur-xl border-r border-gray-200 min-h-[calc(100vh-73px)] sticky top-[73px] shadow-sm">
           <div className="p-6">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-3 rounded-xl mb-6 shadow-lg">
+            <div className="flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-lg mb-6 shadow-md">
               <BookOpen className="w-5 h-5" />
-              <h3 className="font-bold">오늘 진행 순서</h3>
+              <h3 className="font-black">오늘 진행 순서</h3>
             </div>
             <nav className="space-y-2">
               {slides.map((slide, index) => (
                 <Link
                   key={slide.id}
                   to={`/slide/${slide.id}`}
-                  className={`block px-4 py-3 rounded-xl text-sm transition-all group relative overflow-hidden ${
+                  className={`block px-4 py-3 rounded-lg text-sm transition-all group relative overflow-hidden ${
                     slide.id === slideId
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold shadow-lg scale-105'
-                      : 'text-gray-700 hover:bg-white hover:shadow-md border-2 border-transparent hover:border-purple-200'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold shadow-md'
+                      : 'text-gray-700 hover:bg-gray-100 border border-transparent hover:border-blue-200 hover:text-gray-900'
                   }`}
                 >
                   <div className="flex items-center gap-3 relative z-10">
-                    <span className={`text-xs font-mono font-bold px-2 py-1 rounded-lg ${
+                    <span className={`text-xs font-mono font-bold px-2 py-1 rounded-md ${
                       slide.id === slideId 
                         ? 'bg-white/20' 
-                        : 'bg-purple-100 text-purple-600 group-hover:bg-purple-200'
+                        : 'bg-blue-100 text-blue-600 group-hover:bg-blue-200'
                     }`}>
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <span className="flex-1">{slide.title}</span>
+                    <span className="flex-1 font-semibold">{slide.title}</span>
                     {slide.id === slideId && (
-                      <Sparkles className="w-4 h-4 animate-pulse" />
+                      <Sparkles className="w-4 h-4" />
                     )}
                   </div>
                 </Link>
@@ -178,7 +184,7 @@ export function SlidePage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" 
+                className="lg:hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm" 
                 onClick={() => setSidebarOpen(false)}
               />
               <motion.aside
@@ -187,17 +193,17 @@ export function SlidePage() {
                 exit={{ x: -300, opacity: 0 }}
                 transition={{ type: 'spring', damping: 25 }}
                 onClick={(e) => e.stopPropagation()}
-                className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-80 bg-white/95 backdrop-blur-xl shadow-2xl overflow-y-auto"
+                className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-80 bg-white/95 backdrop-blur-xl overflow-y-auto border-r border-gray-200 shadow-2xl"
               >
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-3 rounded-xl shadow-lg">
+                    <div className="flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-lg shadow-md">
                       <BookOpen className="w-5 h-5" />
-                      <h3 className="font-bold">오늘 진행 순서</h3>
+                      <h3 className="font-black">오늘 진행 순서</h3>
                     </div>
                     <button 
                       onClick={() => setSidebarOpen(false)}
-                      className="p-2 hover:bg-gray-100 rounded-xl transition-all"
+                      className="p-2 hover:bg-gray-100 rounded-xl transition-all text-gray-700"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -208,21 +214,21 @@ export function SlidePage() {
                         key={slide.id}
                         to={`/slide/${slide.id}`}
                         onClick={() => setSidebarOpen(false)}
-                        className={`block px-4 py-3 rounded-xl text-sm transition-all group ${
+                        className={`block px-4 py-3 rounded-lg text-sm transition-all group ${
                           slide.id === slideId
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold shadow-lg'
-                            : 'text-gray-700 hover:bg-gray-100 border-2 border-transparent hover:border-purple-200'
+                            ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold shadow-md'
+                            : 'text-gray-700 hover:bg-gray-100 border border-transparent hover:border-blue-200'
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <span className={`text-xs font-mono font-bold px-2 py-1 rounded-lg ${
+                          <span className={`text-xs font-mono font-bold px-2 py-1 rounded-md ${
                             slide.id === slideId 
                               ? 'bg-white/20' 
-                              : 'bg-purple-100 text-purple-600'
+                              : 'bg-blue-100 text-blue-600'
                           }`}>
                             {String(index + 1).padStart(2, '0')}
                           </span>
-                          <span className="flex-1">{slide.title}</span>
+                          <span className="flex-1 font-semibold">{slide.title}</span>
                         </div>
                       </Link>
                     ))}
@@ -244,24 +250,23 @@ export function SlidePage() {
           >
             {/* Slide Header */}
             <div className="mb-10 relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl opacity-20 blur-2xl"></div>
-              <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 border-2 border-purple-200/50 shadow-2xl">
+              <div className="relative bg-white backdrop-blur-xl rounded-2xl p-8 border border-gray-200 shadow-lg">
                 <div className="flex items-center gap-3 mb-4 flex-wrap">
-                  <span className="text-sm font-mono font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-xl shadow-md">
+                  <span className="text-sm font-bold text-white bg-blue-600 px-4 py-2 rounded-lg shadow-sm">
                     {currentSlide.category}
                   </span>
-                  <span className="text-xs font-semibold text-purple-600 bg-purple-100 px-3 py-1.5 rounded-lg">
+                  <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-md border border-blue-200">
                     슬라이드 {currentIndex + 1}
                   </span>
                   <div className="flex-1"></div>
-                  <Sparkles className="w-5 h-5 text-purple-500 animate-pulse" />
+                  <Sparkles className="w-5 h-5 text-cyan-600" />
                 </div>
                 
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 leading-tight">
+                <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 leading-tight tracking-tight">
                   {currentSlide.title}
                 </h1>
                 
-                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
                   {currentSlide.description}
                 </p>
               </div>
@@ -279,11 +284,10 @@ export function SlidePage() {
                 >
                   {section.type === 'text' && (
                     <div className="relative">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500"></div>
-                      <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl p-8 border-2 border-gray-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]">
+                      <div className="relative bg-white backdrop-blur-xl rounded-2xl p-8 border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
                         {section.title && (
-                          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                            <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+                          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                            <div className="w-1.5 h-8 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full"></div>
                             {section.title}
                           </h2>
                         )}
@@ -297,63 +301,45 @@ export function SlidePage() {
                   {section.type === 'code' && section.code && (
                     <div className="relative">
                       {section.title && (
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                            <span className="text-white text-sm font-mono">&lt;/&gt;</span>
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shadow-md">
+                            <span className="text-white text-sm font-mono font-bold">&lt;/&gt;</span>
                           </div>
                           {section.title}
                         </h3>
                       )}
                       <div className="relative">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-2xl opacity-20 blur-lg"></div>
-                        <div className="relative">
-                          <CodeBlock
-                            code={section.code}
-                            language={section.language || 'javascript'}
-                          />
-                        </div>
+                        <CodeBlock
+                          code={section.code}
+                          language={section.language || 'javascript'}
+                        />
                       </div>
                     </div>
                   )}
 
                   {section.type === 'interactive' && slideId === '01' && (
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl opacity-20 blur-2xl"></div>
-                      <div className="relative">
-                        <IntroDemo />
-                      </div>
+                      <IntroDemo />
                     </div>
                   )}
                   {section.type === 'interactive' && slideId === '16' && (
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl opacity-20 blur-2xl"></div>
-                      <div className="relative">
-                        <FABToastDemo />
-                      </div>
+                      <FABToastDemo />
                     </div>
                   )}
                   {section.type === 'error' && (
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-red-400 to-orange-400 rounded-3xl opacity-20 blur-2xl"></div>
-                      <div className="relative">
-                        <ErrorDemo />
-                      </div>
+                      <ErrorDemo />
                     </div>
                   )}
                   {section.type === 'demo' && slideId === '18' && (
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-3xl opacity-20 blur-2xl"></div>
-                      <div className="relative">
-                        <TodoDemo />
-                      </div>
+                      <TodoDemo />
                     </div>
                   )}
                   {section.type === 'demo' && slideId !== '18' && (
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl opacity-20 blur-2xl"></div>
-                      <div className="relative">
-                        <BasicDemo slideId={slideId || ''} />
-                      </div>
+                      <BasicDemo slideId={slideId || ''} />
                     </div>
                   )}
                 </motion.div>
@@ -365,17 +351,17 @@ export function SlidePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-16 flex items-center justify-between pt-10 border-t-2 border-purple-200/50 gap-4"
+              className="mt-16 flex items-center justify-between pt-10 border-t border-gray-200 gap-4"
             >
               {prevSlide ? (
                 <Link
                   to={`/slide/${prevSlide.id}`}
-                  className="flex items-center gap-3 px-6 py-4 bg-white/80 backdrop-blur-xl hover:bg-white border-2 border-purple-200/50 rounded-2xl transition-all hover:shadow-xl hover:scale-105 group flex-1 max-w-sm"
+                  className="flex items-center gap-3 px-6 py-4 bg-white backdrop-blur-xl hover:bg-gray-50 border border-gray-200 hover:border-blue-300 hover:shadow-lg rounded-xl transition-all group flex-1 max-w-sm"
                 >
-                  <ChevronLeft className="w-6 h-6 text-purple-500 group-hover:-translate-x-2 transition-transform" />
+                  <ChevronLeft className="w-6 h-6 text-blue-600 group-hover:-translate-x-2 transition-transform" />
                   <div className="text-left flex-1">
-                    <div className="text-xs font-semibold text-purple-600 mb-1">이전 슬라이드</div>
-                    <div className="font-bold text-gray-800 group-hover:text-purple-600 transition-colors truncate">
+                    <div className="text-xs font-semibold text-gray-500 mb-1">이전 슬라이드</div>
+                    <div className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
                       {prevSlide.title}
                     </div>
                   </div>
@@ -387,10 +373,10 @@ export function SlidePage() {
               {nextSlide ? (
                 <Link
                   to={`/slide/${nextSlide.id}`}
-                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-2xl transition-all shadow-xl hover:shadow-2xl hover:scale-105 group flex-1 max-w-sm"
+                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-xl transition-all shadow-lg group flex-1 max-w-sm"
                 >
                   <div className="text-right flex-1">
-                    <div className="text-xs font-semibold text-purple-100 mb-1">다음 슬라이드</div>
+                    <div className="text-xs font-semibold text-blue-100 mb-1">다음 슬라이드</div>
                     <div className="font-bold truncate">
                       {nextSlide.title}
                     </div>
@@ -400,11 +386,11 @@ export function SlidePage() {
               ) : (
                 <Link
                   to="/"
-                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-2xl transition-all shadow-xl hover:shadow-2xl hover:scale-105 group flex-1 max-w-sm"
+                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl transition-all shadow-lg group flex-1 max-w-sm"
                 >
                   <Home className="w-6 h-6 group-hover:rotate-12 transition-transform" />
                   <div className="text-left flex-1">
-                    <div className="text-xs font-semibold text-green-100 mb-1">🎉 수고하셨습니다!</div>
+                    <div className="text-xs font-semibold text-emerald-100 mb-1">🎉 수고하셨습니다!</div>
                     <div className="font-bold">홈으로 돌아가기</div>
                   </div>
                 </Link>
@@ -413,25 +399,6 @@ export function SlidePage() {
           </motion.div>
         </main>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(20px, -50px) scale(1.1); }
-          50% { transform: translate(-20px, 20px) scale(0.9); }
-          75% { transform: translate(50px, 50px) scale(1.05); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </div>
   );
 }
