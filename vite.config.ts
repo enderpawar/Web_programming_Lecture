@@ -18,7 +18,7 @@ export default defineConfig({
   },
 
   // GitHub Pages repo name as base path
-  base: '/Createinteractiveslideexamples/',
+  base: '/Web_programming_Lecture/',
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
