@@ -1218,6 +1218,60 @@ document.addEventListener('keydown', (e) => {
       { type: 'demo', demoId: '17-breadcrumb' },
       {
         type: 'code',
+        title: 'Dropdown / Select — 선택 목록',
+        demoId: '17-dropdown',
+        code: `<div class="dropdown">
+  <button class="dropdown-trigger" id="ddTrigger">
+    옵션 선택 ▾
+  </button>
+
+  <ul class="dropdown-menu" id="ddMenu" hidden>
+    <li class="dropdown-item">🍎 Apple</li>
+    <li class="dropdown-item">🍊 Orange</li>
+    <li class="dropdown-item">🍋 Lemon</li>
+    <li class="dropdown-item">🍇 Grape</li>
+  </ul>
+</div>
+
+<script>
+const trigger = document.getElementById('ddTrigger');
+const menu    = document.getElementById('ddMenu');
+
+trigger.addEventListener('click', () => {
+  menu.hidden = !menu.hidden;
+});
+
+menu.addEventListener('click', e => {
+  if (e.target.classList.contains('dropdown-item')) {
+    trigger.textContent = e.target.textContent + ' ▾';
+    menu.hidden = true;
+  }
+});
+</script>
+
+<style>
+.dropdown { position: relative; display: inline-block; }
+.dropdown-trigger {
+  padding: 0.5rem 1rem; border: 1px solid #e5e7eb;
+  border-radius: 8px; background: white; cursor: pointer;
+  font-size: 0.875rem;
+}
+.dropdown-menu {
+  position: absolute; top: 110%; left: 0;
+  background: white; border: 1px solid #e5e7eb;
+  border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  list-style: none; min-width: 160px; z-index: 10;
+}
+.dropdown-item {
+  padding: 0.6rem 1rem; font-size: 0.875rem; cursor: pointer;
+}
+.dropdown-item:hover { background: #f9fafb; }
+</style>`,
+        language: 'html',
+      },
+      { type: 'demo', demoId: '17-dropdown' },
+      {
+        type: 'code',
         title: 'Modal / Dialog — 팝업 레이어',
         demoId: '17-modal',
         code: `<!-- 오버레이 + 다이얼로그 구조 -->
@@ -1290,6 +1344,52 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
       { type: 'demo', demoId: '17-card' },
       {
         type: 'code',
+        title: 'Badge / Chip — 상태·카테고리 라벨',
+        demoId: '17-badge',
+        code: `<!-- Badge: 상태 표시 -->
+<span class="badge green">완료</span>
+<span class="badge red">오류</span>
+<span class="badge yellow">대기</span>
+<span class="badge blue">진행중</span>
+
+<!-- Chip: 제거 가능한 태그 -->
+<span class="chip">
+  React
+  <button class="chip-remove" onclick="this.parentElement.remove()">×</button>
+</span>
+<span class="chip">
+  TypeScript
+  <button class="chip-remove" onclick="this.parentElement.remove()">×</button>
+</span>
+
+<style>
+.badge {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.2rem 0.65rem; border-radius: 999px;
+}
+.badge.green  { background: #dcfce7; color: #166534; }
+.badge.red    { background: #fee2e2; color: #991b1b; }
+.badge.yellow { background: #fef9c3; color: #854d0e; }
+.badge.blue   { background: #dbeafe; color: #1e40af; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: #f3f4f6; border: 1px solid #e5e7eb;
+  padding: 0.3rem 0.75rem; border-radius: 999px;
+  font-size: 0.8rem; color: #374151;
+}
+.chip-remove {
+  background: none; border: none; cursor: pointer;
+  color: #9ca3af; font-size: 1rem; line-height: 1;
+}
+.chip-remove:hover { color: #374151; }
+</style>`,
+        language: 'html',
+      },
+      { type: 'demo', demoId: '17-badge' },
+      {
+        type: 'code',
         title: 'Skeleton — 로딩 자리 표시자',
         demoId: '17-skeleton',
         code: `<div class="card skeleton-card">
@@ -1355,46 +1455,114 @@ button.danger { background: #ef4444; color: white; border: none; padding: 0.5rem
       { type: 'demo', demoId: '17-pagination' },
       {
         type: 'code',
-        title: 'FAB & Toast — 고정 버튼 / 알림',
-        code: `<button class="fab" id="fabButton">＋</button>
+        title: 'Toast / Snackbar — 일시적 알림 메시지',
+        demoId: '17-toast',
+        code: `<button onclick="showToast('저장되었습니다 ✓', 'success')">저장</button>
+<button onclick="showToast('오류가 발생했습니다', 'error')">오류</button>
+<button onclick="showToast('새 알림이 있습니다', 'info')">알림</button>
 
-<div class="toast" id="toast">저장되었습니다 ✓</div>
+<!-- Toast 컨테이너 -->
+<div id="toastContainer" class="toast-container"></div>
 
 <script>
-document.getElementById('fabButton').addEventListener('click', () => {
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3000);
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = \`toast toast-\${type}\`;
+  toast.textContent = message;
+  container.appendChild(toast);
+
+  // 애니메이션 후 제거
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+</script>
+
+<style>
+.toast-container {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  z-index: 9999;
+}
+.toast {
+  padding: 0.75rem 1.25rem; border-radius: 8px;
+  font-size: 0.875rem; color: white;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast-success { background: #22c55e; }
+.toast-error   { background: #ef4444; }
+.toast-info    { background: #3b82f6; }
+</style>`,
+        language: 'html',
+      },
+      { type: 'demo', demoId: '17-toast' },
+      {
+        type: 'code',
+        title: 'FAB (Floating Action Button) — 고정 액션 버튼',
+        demoId: '17-fab',
+        code: `<div class="fab-container">
+  <!-- 서브 메뉴 버튼 -->
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-sub pink" title="좋아요">♥</button>
+    <button class="fab-sub yellow" title="즐겨찾기">★</button>
+    <button class="fab-sub blue" title="공유">↗</button>
+  </div>
+
+  <!-- 메인 FAB -->
+  <button class="fab-main" id="fabMain">＋</button>
+</div>
+
+<script>
+const fabMain = document.getElementById('fabMain');
+const fabMenu = document.getElementById('fabMenu');
+let open = false;
+
+fabMain.addEventListener('click', () => {
+  open = !open;
+  fabMenu.classList.toggle('visible', open);
+  fabMain.style.transform = open ? 'rotate(45deg)' : '';
 });
 </script>
 
 <style>
-.fab {
-  position: fixed; bottom: 2rem; right: 2rem;
+.fab-container {
+  position: relative; display: inline-flex;
+  flex-direction: column; align-items: center; gap: 0.5rem;
+}
+.fab-menu { display: flex; flex-direction: column; gap: 0.5rem; align-items: center;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.25s; pointer-events: none;
+}
+.fab-menu.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.fab-sub {
+  width: 44px; height: 44px; border-radius: 50%; border: none;
+  font-size: 1.1rem; cursor: pointer; color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.2s;
+}
+.fab-sub:hover { transform: scale(1.1); }
+.fab-sub.pink   { background: #ec4899; }
+.fab-sub.yellow { background: #f59e0b; }
+.fab-sub.blue   { background: #3b82f6; }
+
+.fab-main {
   width: 56px; height: 56px; border-radius: 50%;
   background: #0a0a0a; color: white; font-size: 1.5rem;
   border: none; cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.25s, box-shadow 0.25s;
 }
-.fab:hover { transform: scale(1.1); }
-
-.toast {
-  position: fixed; bottom: 5rem; right: 2rem;
-  background: #0a0a0a; color: white;
-  padding: 0.75rem 1.25rem; border-radius: 8px;
-  font-size: 0.875rem; opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s;
-  pointer-events: none;
-}
-.toast.show { opacity: 1; transform: translateY(0); }
+.fab-main:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
 </style>`,
         language: 'html',
       },
-      {
-        type: 'interactive',
-      }
+      { type: 'demo', demoId: '17-fab' },
     ],
   },
   {

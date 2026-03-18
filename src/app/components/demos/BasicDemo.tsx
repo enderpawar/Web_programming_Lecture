@@ -967,6 +967,140 @@ function IntersectionPreview() {
 
 /* ───────────── 17번 슬라이드 개별 컴포넌트 미리보기 ───────────── */
 
+function DropdownPreview() {
+  const options = ['🍎 Apple', '🍊 Orange', '🍋 Lemon', '🍇 Grape'];
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-start gap-4">
+      <div className="relative inline-block">
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:border-gray-400 transition-colors"
+        >
+          <span>{selected ?? '옵션 선택'}</span>
+          <span className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>▾</span>
+        </button>
+        {open && (
+          <ul className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[160px] py-1 list-none m-0 p-0">
+            {options.map(opt => (
+              <li
+                key={opt}
+                onClick={() => { setSelected(opt); setOpen(false); }}
+                className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-50 transition-colors ${selected === opt ? 'font-semibold text-gray-900' : 'text-gray-600'}`}
+              >{opt}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <span className="text-xs text-gray-400 font-mono mt-2">클릭해서 선택해보세요</span>
+    </div>
+  );
+}
+
+function BadgePreview() {
+  const badges = [
+    { label: '완료', cls: 'bg-green-100 text-green-800' },
+    { label: '오류', cls: 'bg-red-100 text-red-800' },
+    { label: '대기', cls: 'bg-yellow-100 text-yellow-800' },
+    { label: '진행중', cls: 'bg-blue-100 text-blue-800' },
+  ];
+  const [chips, setChips] = useState(['React', 'TypeScript', 'Tailwind', 'Vite']);
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+      <div>
+        <p className="text-xs text-gray-400 font-mono mb-2">Badge — 상태 표시</p>
+        <div className="flex flex-wrap gap-2">
+          {badges.map(b => (
+            <span key={b.label} className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${b.cls}`}>{b.label}</span>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p className="text-xs text-gray-400 font-mono mb-2">Chip — × 버튼으로 제거 가능</p>
+        <div className="flex flex-wrap gap-2">
+          {chips.map(c => (
+            <span key={c} className="inline-flex items-center gap-1 bg-white border border-gray-200 px-3 py-1 rounded-full text-sm text-gray-700">
+              {c}
+              <button onClick={() => setChips(prev => prev.filter(x => x !== c))} className="text-gray-400 hover:text-gray-700 text-base leading-none ml-0.5">×</button>
+            </span>
+          ))}
+          {chips.length === 0 && <span className="text-xs text-gray-400 font-mono">전부 제거되었습니다</span>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ToastPreview() {
+  const [toasts, setToasts] = useState<{ id: number; msg: string; color: string }[]>([]);
+  const show = (msg: string, color: string) => {
+    const id = Date.now();
+    setToasts(p => [...p, { id, msg, color }]);
+    setTimeout(() => setToasts(p => p.filter(t => t.id !== id)), 3000);
+  };
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <div className="flex flex-wrap gap-2 mb-3">
+        <button onClick={() => show('저장되었습니다 ✓', 'bg-green-500')} className="px-3 py-1.5 text-xs font-medium bg-green-500 text-white rounded hover:bg-green-600 transition-colors">저장</button>
+        <button onClick={() => show('오류가 발생했습니다', 'bg-red-500')} className="px-3 py-1.5 text-xs font-medium bg-red-500 text-white rounded hover:bg-red-600 transition-colors">오류</button>
+        <button onClick={() => show('새 알림이 있습니다', 'bg-blue-500')} className="px-3 py-1.5 text-xs font-medium bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">알림</button>
+      </div>
+      <div className="space-y-2 min-h-[40px]">
+        {toasts.map(t => (
+          <div key={t.id} className={`${t.color} text-white text-sm px-4 py-2.5 rounded-lg shadow flex items-center justify-between`}>
+            <span>{t.msg}</span>
+            <button onClick={() => setToasts(p => p.filter(x => x.id !== t.id))} className="ml-3 opacity-70 hover:opacity-100 text-xs">×</button>
+          </div>
+        ))}
+        {toasts.length === 0 && <p className="text-xs text-gray-400 font-mono">버튼을 클릭하면 알림이 표시됩니다 (3초 후 자동 사라짐)</p>}
+      </div>
+    </div>
+  );
+}
+
+function FabPreview() {
+  const [open, setOpen] = useState(false);
+  const [log, setLog] = useState<string | null>(null);
+  const subs = [
+    { label: '♥', color: 'bg-pink-500 hover:bg-pink-600', msg: '좋아요를 눌렀습니다!' },
+    { label: '★', color: 'bg-yellow-500 hover:bg-yellow-600', msg: '즐겨찾기 추가!' },
+    { label: '↗', color: 'bg-blue-500 hover:bg-blue-600', msg: '공유 링크 복사!' },
+  ];
+  const handleSub = (msg: string) => {
+    setLog(msg);
+    setOpen(false);
+    setTimeout(() => setLog(null), 2000);
+  };
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-end gap-6 min-h-[140px]">
+      <div className="relative flex flex-col items-center gap-2">
+        {open && (
+          <div className="flex flex-col gap-2 mb-1">
+            {subs.map(s => (
+              <button
+                key={s.label}
+                onClick={() => handleSub(s.msg)}
+                className={`w-10 h-10 rounded-full ${s.color} text-white shadow-md transition-all`}
+              >{s.label}</button>
+            ))}
+          </div>
+        )}
+        <button
+          onClick={() => setOpen(o => !o)}
+          className={`w-14 h-14 rounded-full bg-gray-950 text-white text-2xl shadow-lg hover:shadow-xl transition-all ${open ? 'rotate-45' : ''}`}
+          style={{ transition: 'transform 0.25s, box-shadow 0.2s' }}
+        >＋</button>
+      </div>
+      <div className="flex-1">
+        {log
+          ? <p className="text-sm font-medium text-gray-700 bg-white border border-gray-200 px-3 py-2 rounded-lg">{log}</p>
+          : <p className="text-xs text-gray-400 font-mono">＋ 버튼을 클릭해보세요</p>}
+      </div>
+    </div>
+  );
+}
+
 function NavPreview() {
   return (
     <div className="rounded-lg overflow-hidden border border-gray-200">
@@ -1110,8 +1244,12 @@ const demoComponents: Record<string, JSX.Element> = {
   '10-intersection': <IntersectionPreview />,
   '17-nav':          <NavPreview />,
   '17-breadcrumb':   <BreadcrumbPreview />,
+  '17-dropdown':     <DropdownPreview />,
   '17-modal':        <ModalPreview />,
   '17-card':         <CardPreview />,
+  '17-badge':        <BadgePreview />,
+  '17-toast':        <ToastPreview />,
+  '17-fab':          <FabPreview />,
   '17-skeleton':     <SkeletonPreview />,
   '17-pagination':   <PaginationPreview />,
 };
