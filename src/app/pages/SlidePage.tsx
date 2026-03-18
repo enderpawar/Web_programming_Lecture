@@ -11,6 +11,39 @@ import { Home, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+function CollapsibleTextSection({ section }: { section: import('../data/slides').SlideSection }) {
+  const [open, setOpen] = useState(!section.defaultCollapsed);
+
+  const renderContent = (content: string) =>
+    content.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+      part.startsWith('**') && part.endsWith('**')
+        ? <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>
+        : part
+    );
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-7 py-5 text-left hover:bg-gray-50 transition-colors"
+      >
+        <span className="flex items-center gap-3 text-xl font-bold text-gray-900">
+          <span className="w-1 h-6 bg-orange-400 rounded-full shrink-0 inline-block" />
+          {section.title}
+        </span>
+        <span className={`text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+          ▾
+        </span>
+      </button>
+      {open && (
+        <div className="px-7 pb-6 text-gray-600 whitespace-pre-wrap leading-relaxed text-base border-t border-gray-100">
+          <div className="pt-4">{renderContent(section.content || '')}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function SlidePage() {
   const { slideId } = useParams<{ slideId: string }>();
   const navigate = useNavigate();
@@ -218,7 +251,11 @@ export function SlidePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.07 }}
                 >
-                  {section.type === 'text' && (
+                  {section.type === 'text' && section.collapsible && (
+                    <CollapsibleTextSection section={section} />
+                  )}
+
+                  {section.type === 'text' && !section.collapsible && (
                     <div className="bg-white border border-gray-200 rounded-xl p-7">
                       {section.title && (
                         <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-3">

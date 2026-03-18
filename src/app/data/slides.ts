@@ -14,6 +14,8 @@ export interface SlideSection {
   language?: string;
   demo?: React.ComponentType;
   demoId?: string;
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
 }
 
 export const slides: Slide[] = [
@@ -174,6 +176,33 @@ console.log(result); // true 또는 false`,
 ① 코드를 사람이 읽기 쉬워집니다 (**가독성** ↑)
 ② 검색 엔진(Google)이 페이지 구조를 더 잘 이해합니다 (**SEO** ↑)
 ③ 스크린 리더(시각장애인 보조도구)가 페이지를 올바르게 읽습니다 (**접근성** ↑)`,
+      },
+      {
+        type: 'text',
+        title: 'SEO란 무엇인가요?',
+        collapsible: true,
+        defaultCollapsed: true,
+        content: `**SEO(Search Engine Optimization)** 는 "검색 엔진 최적화"의 줄임말입니다.
+쉽게 말하면 **내 웹 페이지가 Google, Naver 등 검색 결과 상위에 노출되도록 만드는 작업**입니다.
+
+검색 엔진이 페이지를 읽는 방식:
+검색 엔진은 **크롤러(crawler)** 라는 프로그램을 보내 웹 페이지의 HTML 코드를 읽고, 이 페이지가 어떤 내용인지 분석합니다. 이때 시맨틱 태그가 있으면 구조를 훨씬 잘 이해합니다.
+
+예시:
+• **<h1>** 태그 — "이 페이지의 가장 중요한 제목"임을 검색 엔진에 알려줌
+• **<article>** 태그 — "여기에 독립적인 글이 있다"고 알려줌
+• **<nav>** 태그 — "여기는 메뉴 링크 목록이다"고 알려줌
+• **<main>** 태그 — "여기가 핵심 콘텐츠다"고 알려줌
+
+SEO에 영향을 주는 요소들:
+① **시맨틱 HTML** — 올바른 태그 사용으로 페이지 구조 명확히 전달
+② **<title> 태그** — 브라우저 탭과 검색 결과에 표시되는 제목
+③**<meta description>** — 검색 결과 제목 아래 나오는 짧은 설명
+④ **alt 속성** — 이미지에 대한 설명, 검색 엔진이 이미지를 이해하는 데 사용
+⑤ **페이지 로딩 속도** — 느린 사이트는 검색 순위가 낮아짐
+⑥ **모바일 반응형** — 모바일에서 잘 보이는 사이트가 우대받음
+
+💡 시맨틱 태그를 잘 쓰는 것만으로도 SEO에 큰 도움이 됩니다.`,
       },
       { type: 'demo', demoId: '05-semantic' },
       {
