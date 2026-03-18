@@ -880,6 +880,179 @@ function LayoutPreview() {
 
 /* ───────────── 10번 슬라이드 개별 미리보기 ───────────── */
 
+function BoxShadowPreview() {
+  const presets = [
+    { name: '약한', x: 0, y: 2, blur: 8, spread: 0, a: 0.10 },
+    { name: '떠있음', x: 0, y: 12, blur: 30, spread: 0, a: 0.18 },
+    { name: '하드', x: 0, y: 8, blur: 0, spread: 0, a: 0.18 },
+  ] as const;
+
+  const colors = [
+    { name: 'black', rgb: [0, 0, 0] as const },
+    { name: 'blue', rgb: [59, 130, 246] as const },   // #3b82f6
+    { name: 'purple', rgb: [168, 85, 247] as const }, // #a855f7
+    { name: 'orange', rgb: [251, 146, 60] as const }, // #fb923c
+  ] as const;
+
+  const [preset, setPreset] = useState<(typeof presets)[number]>(presets[0]);
+  const [hover, setHover] = useState(false);
+  const [blur, setBlur] = useState<number>(presets[0].blur);
+  const [spread, setSpread] = useState<number>(presets[0].spread);
+  const [color, setColor] = useState<(typeof colors)[number]>(colors[0]);
+  const [alpha, setAlpha] = useState<number>(presets[0].a);
+
+  useEffect(() => {
+    setBlur(preset.blur);
+    setSpread(preset.spread);
+    setAlpha(preset.a);
+  }, [preset]);
+
+  const rgba = `rgba(${color.rgb[0]},${color.rgb[1]},${color.rgb[2]},${alpha.toFixed(2)})`;
+  const shadow = `${preset.x}px ${preset.y}px ${blur}px ${spread}px ${rgba}`;
+  const hoverShadow = `0px 12px 30px 0px ${rgba}`;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        {presets.map(p => (
+          <button
+            key={p.name}
+            onClick={() => setPreset(p)}
+            className={`text-[11px] font-mono px-3 py-1.5 rounded-md border transition-colors ${
+              preset.name === p.name ? 'bg-gray-950 text-white border-gray-950' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            {p.name}
+          </button>
+        ))}
+        <span className="text-[10px] text-gray-400 font-mono">hover: 그림자 + 살짝 위로</span>
+      </div>
+
+      <div className="bg-white border border-gray-200 rounded-xl p-3">
+        <div className="flex items-baseline justify-between mb-2">
+          <code className="text-xs font-mono text-orange-500 font-bold">color (rgba)</code>
+          <span className="text-[10px] text-gray-400 font-mono">{rgba}</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          {colors.map(c => (
+            <button
+              key={c.name}
+              onClick={() => setColor(c)}
+              className={`text-[10px] font-mono px-2 py-1 rounded-md border transition-colors ${
+                color.name === c.name ? 'bg-gray-950 text-white border-gray-950' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              <span
+                className="inline-block w-2.5 h-2.5 rounded-full mr-1 align-middle"
+                style={{ background: `rgb(${c.rgb[0]},${c.rgb[1]},${c.rgb[2]})` }}
+              />
+              {c.name}
+            </button>
+          ))}
+          <span className="text-[10px] text-gray-400 font-mono ml-2">alpha</span>
+          {[0.06, 0.10, 0.14, 0.18, 0.24, 0.32].map(v => (
+            <button
+              key={v}
+              onClick={() => setAlpha(v)}
+              className={`text-[10px] font-mono px-2 py-1 rounded-md transition-colors ${
+                alpha === v ? 'bg-gray-950 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {v.toFixed(2)}
+            </button>
+          ))}
+        </div>
+        <p className="text-[11px] text-gray-600 leading-relaxed mt-2 break-keep">
+          <strong>색 그림자</strong>는 카드에 “브랜드 톤”을 얹을 때 유용합니다. 다만 alpha(투명도)가 높으면 과해 보일 수 있어요.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <div className="flex items-baseline justify-between mb-2">
+            <code className="text-xs font-mono text-orange-500 font-bold">blur</code>
+            <span className="text-[10px] text-gray-400 font-mono">{blur}px</span>
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {[0, 4, 8, 16, 24, 32, 48].map(v => (
+              <button
+                key={v}
+                onClick={() => setBlur(v)}
+                className={`text-[10px] font-mono px-2 py-1 rounded-md transition-colors ${
+                  blur === v ? 'bg-gray-950 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <p className="text-[11px] text-gray-600 leading-relaxed mt-2 break-keep">
+            <strong>경계(가장자리)</strong>를 얼마나 <strong>부드럽게</strong> 퍼뜨릴지. 값이 커질수록 그림자가 <strong>뿌옇게 넓어집니다</strong>.
+          </p>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <div className="flex items-baseline justify-between mb-2">
+            <code className="text-xs font-mono text-orange-500 font-bold">spread</code>
+            <span className="text-[10px] text-gray-400 font-mono">{spread}px</span>
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {[-12, -8, -4, 0, 4, 8, 12].map(v => (
+              <button
+                key={v}
+                onClick={() => setSpread(v)}
+                className={`text-[10px] font-mono px-2 py-1 rounded-md transition-colors ${
+                  spread === v ? 'bg-gray-950 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <p className="text-[11px] text-gray-600 leading-relaxed mt-2 break-keep">
+            그림자 <strong>덩어리 크기</strong>를 키우거나 줄입니다. <strong>+</strong>면 두꺼워지고, <strong>-</strong>면 타이트해집니다.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="bg-white border border-gray-200 rounded-xl p-5">
+          <p className="text-[10px] font-mono text-gray-400 mb-3">기본 상태</p>
+          <div
+            className="rounded-xl bg-white border border-gray-100 p-5"
+            style={{ boxShadow: shadow }}
+          >
+            <p className="text-sm font-semibold text-gray-900 mb-1">Card</p>
+            <p className="text-xs text-gray-500">box-shadow로 깊이감</p>
+          </div>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-xl p-5">
+          <p className="text-[10px] font-mono text-gray-400 mb-3">hover 상태 (마우스를 올려보세요)</p>
+          <div
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            className="rounded-xl bg-white border border-gray-100 p-5 transition-all duration-300 cursor-pointer"
+            style={{
+              boxShadow: hover ? hoverShadow : shadow,
+              transform: hover ? 'translateY(-4px)' : 'translateY(0)',
+            }}
+          >
+            <p className="text-sm font-semibold text-gray-900 mb-1">Hover me</p>
+            <p className="text-xs text-gray-500">shadow + lift</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-gray-950 rounded-xl p-3 text-[11px] font-mono text-gray-300">
+        <div className="text-gray-500 mb-1">현재 값</div>
+        <div><span className="text-sky-300">box-shadow</span>: <span className="text-orange-300">{shadow}</span>;</div>
+        <div className="text-gray-600 mt-1">x y blur spread color</div>
+      </div>
+    </div>
+  );
+}
+
 function TransitionPreview() {
   return (
     <div className="flex flex-wrap gap-4 items-center">
@@ -1251,6 +1424,7 @@ const demoComponents: Record<string, JSX.Element> = {
   '05-semantic':     <SemanticTagsPreview />,
   '05-layout':       <LayoutPreview />,
   '08-playground':   <FlexboxPlayground />,
+  '10-shadow':       <BoxShadowPreview />,
   '10-transition':   <TransitionPreview />,
   '14-select':       <DOMSelectorPreview />,
   '14-dom':          <DOMPlayground />,

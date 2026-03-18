@@ -11,15 +11,44 @@ import { Home, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 
-function CollapsibleTextSection({ section }: { section: import('../data/slides').SlideSection }) {
-  const [open, setOpen] = useState(!section.defaultCollapsed);
-
-  const renderContent = (content: string) =>
-    content.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+function renderRichText(content: string) {
+  const renderInlineBold = (line: string) =>
+    line.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
       part.startsWith('**') && part.endsWith('**')
         ? <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>
         : part
     );
+
+  const lines = (content || '').split('\n');
+  return (
+    <div className="space-y-2">
+      {lines.map((line, idx) =>
+        line.trim() === ''
+          ? <div key={`spacer-${idx}`} className="h-2" />
+          : line.trim() === '<hr>'
+          ? (
+            <hr
+              key={`hr-${idx}`}
+              className="my-4 border-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"
+            />
+          )
+          : (
+            <p
+              key={idx}
+              className={`leading-relaxed ${
+                line.trim().startsWith('•') ? 'pl-4 -indent-4' : ''
+              }`}
+            >
+              {renderInlineBold(line)}
+            </p>
+          )
+      )}
+    </div>
+  );
+}
+
+function CollapsibleTextSection({ section }: { section: import('../data/slides').SlideSection }) {
+  const [open, setOpen] = useState(!section.defaultCollapsed);
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -36,8 +65,8 @@ function CollapsibleTextSection({ section }: { section: import('../data/slides')
         </span>
       </button>
       {open && (
-        <div className="px-7 pb-6 text-gray-600 whitespace-pre-wrap leading-relaxed text-base border-t border-gray-100">
-          <div className="pt-4">{renderContent(section.content || '')}</div>
+        <div className="px-7 pb-6 text-gray-600 text-base border-t border-gray-100">
+          <div className="pt-4">{renderRichText(section.content || '')}</div>
         </div>
       )}
     </div>
@@ -263,12 +292,8 @@ export function SlidePage() {
                           {section.title}
                         </h2>
                       )}
-                      <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base">
-                        {(section.content || '').split(/(\*\*[^*]+\*\*)/).map((part, i) =>
-                          part.startsWith('**') && part.endsWith('**')
-                            ? <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>
-                            : part
-                        )}
+                      <div className="text-gray-600 text-base">
+                        {renderRichText(section.content || '')}
                       </div>
                     </div>
                   )}
