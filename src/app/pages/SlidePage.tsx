@@ -227,7 +227,11 @@ export function SlidePage() {
                         </h2>
                       )}
                       <div className="text-gray-600 whitespace-pre-wrap leading-relaxed text-base">
-                        {section.content}
+                        {(section.content || '').split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+                          part.startsWith('**') && part.endsWith('**')
+                            ? <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>
+                            : part
+                        )}
                       </div>
                     </div>
                   )}

@@ -1,29 +1,795 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+/* ───────────── 08번 슬라이드 Flexbox 플레이그라운드 ───────────── */
+
+function FlexboxPlayground() {
+  const [direction, setDirection] = useState<string>('row');
+  const [wrap, setWrap] = useState<string>('nowrap');
+  const [justify, setJustify] = useState<string>('flex-start');
+  const [alignItems, setAlignItems] = useState<string>('stretch');
+  const [alignContent, setAlignContent] = useState<string>('stretch');
+  const [gap, setGap] = useState<string>('8px');
+
+  const controls: {
+    label: string;
+    desc: string;
+    hint: React.ReactNode;
+    value: string;
+    set: (v: string) => void;
+    options: string[];
+    optionHints?: Record<string, string>;
+  }[] = [
+    {
+      label: 'flex-direction',
+      desc: '주축 방향',
+      hint: <>아이템을 나열하는 <strong>방향</strong>을 결정합니다. <strong>row</strong>는 가로(→), <strong>column</strong>은 세로(↓), <strong>-reverse</strong>는 반대 방향입니다.</>,
+      value: direction,
+      set: setDirection,
+      options: ['row', 'row-reverse', 'column', 'column-reverse'],
+      optionHints: {
+        'row': '→ 왼→오른쪽',
+        'row-reverse': '← 오른→왼쪽',
+        'column': '↓ 위→아래',
+        'column-reverse': '↑ 아래→위',
+      },
+    },
+    {
+      label: 'flex-wrap',
+      desc: '줄바꿈',
+      hint: <>아이템이 컨테이너 너비를 넘었을 때 <strong>줄바꿈</strong>할지 결정합니다. <strong>nowrap</strong>은 한 줄로 강제, <strong>wrap</strong>은 다음 줄로 내려보냅니다.</>,
+      value: wrap,
+      set: setWrap,
+      options: ['nowrap', 'wrap', 'wrap-reverse'],
+      optionHints: {
+        'nowrap': '한 줄 고정',
+        'wrap': '아래로 줄바꿈',
+        'wrap-reverse': '위로 줄바꿈',
+      },
+    },
+    {
+      label: 'justify-content',
+      desc: '주축 정렬',
+      hint: <><strong>주축(flex-direction 방향)</strong>으로 아이템 사이의 <strong>빈 공간을 어떻게 배분</strong>할지 결정합니다. 컨테이너에 여유 공간이 있어야 효과가 보입니다.</>,
+      value: justify,
+      set: setJustify,
+      options: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'],
+      optionHints: {
+        'flex-start': '시작점 정렬',
+        'flex-end': '끝점 정렬',
+        'center': '가운데 정렬',
+        'space-between': '양 끝 고정, 사이 균등',
+        'space-around': '각 아이템 양쪽 균등',
+        'space-evenly': '모든 간격 완전 균등',
+      },
+    },
+    {
+      label: 'align-items',
+      desc: '교차축 정렬 (한 줄)',
+      hint: <><strong>교차축(주축과 수직 방향)</strong>으로 아이템을 정렬합니다. row 방향이면 <strong>세로</strong> 정렬을 담당합니다. 한 줄일 때 사용합니다.</>,
+      value: alignItems,
+      set: setAlignItems,
+      options: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
+      optionHints: {
+        'stretch': '컨테이너 높이에 맞게 늘림',
+        'flex-start': '교차축 시작점',
+        'flex-end': '교차축 끝점',
+        'center': '교차축 가운데',
+        'baseline': '텍스트 기준선 맞춤',
+      },
+    },
+    {
+      label: 'align-content',
+      desc: '교차축 정렬 (여러 줄)',
+      hint: <><strong>flex-wrap: wrap</strong>으로 여러 줄이 생겼을 때, <strong>행(row) 전체 묶음</strong>을 교차축 방향으로 배분합니다. 한 줄일 땐 아무 효과가 없습니다.</>,
+      value: alignContent,
+      set: setAlignContent,
+      options: ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around'],
+      optionHints: {
+        'stretch': '행을 늘려 채움',
+        'flex-start': '위쪽 정렬',
+        'flex-end': '아래쪽 정렬',
+        'center': '세로 가운데',
+        'space-between': '첫/끝 행 끝에 붙고 사이 균등',
+        'space-around': '각 행 위아래 균등',
+      },
+    },
+    {
+      label: 'gap',
+      desc: '아이템 간격',
+      hint: <>아이템과 아이템 사이의 <strong>간격(여백)</strong>을 설정합니다. margin으로 일일이 주는 대신 <strong>gap 하나</strong>로 모든 간격을 한번에 조절할 수 있습니다.</>,
+      value: gap,
+      set: setGap,
+      options: ['0px', '4px', '8px', '16px', '24px', '32px'],
+    },
+  ];
+
+  const COLORS = ['bg-orange-400', 'bg-gray-700', 'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-rose-400'];
+  const isColumn = direction.includes('column');
+
+  return (
+    <div className="space-y-4">
+      {/* Controls */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {controls.map(({ label, desc, hint, value, set, options, optionHints }) => (
+          <div
+            key={label}
+            className={`bg-white border rounded-xl p-3 ${
+              label === 'align-content' && wrap === 'nowrap'
+                ? 'border-amber-300 bg-amber-50/50'
+                : 'border-gray-200'
+            }`}
+          >
+            <div className="flex items-baseline gap-2 mb-1">
+              <code className="text-xs font-mono text-orange-500 font-bold">{label}</code>
+              <span className="text-[10px] text-gray-400">{desc}</span>
+            </div>
+            {/* 부가 설명 */}
+            <p className="text-[11px] text-gray-600 leading-relaxed mb-2 break-keep">{hint}</p>
+            {label === 'align-content' && wrap === 'nowrap' && (
+              <p className="text-[10px] text-amber-600 font-mono mb-1.5">
+                ⚠ flex-wrap: wrap 일 때만 작동합니다
+              </p>
+            )}
+            <div className="flex flex-wrap gap-1 mb-1">
+              {options.map(opt => (
+                <button
+                  key={opt}
+                  onClick={() => set(opt)}
+                  className={`text-[10px] font-mono px-2 py-1 rounded-md transition-all duration-150 ${
+                    value === opt
+                      ? 'bg-gray-950 text-white shadow-sm'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+            {/* 선택된 값의 힌트만 버튼 목록 아래에 표시 */}
+            {optionHints?.[value] && (
+              <p className="text-[10px] text-orange-500 font-mono">→ {optionHints[value]}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Live Preview */}
+      <div className="rounded-xl border-2 border-orange-200 bg-orange-50/30 p-3">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-[10px] font-mono text-orange-400 uppercase tracking-widest">라이브 미리보기</p>
+          <span className="text-[10px] font-mono text-gray-400">
+            {isColumn
+              ? 'column 방향'
+              : wrap !== 'nowrap'
+              ? '컨테이너 300px 고정 — 줄바꿈 확인'
+              : '컨테이너 100% — justify-content 확인'}
+          </span>
+        </div>
+        {/*
+          nowrap: 컨테이너를 min-content로 자동 확장 → overflow-x 스크롤로 전체 보기
+          wrap:   컨테이너를 300px 고정 → 줄바꿈이 시각적으로 발생
+        */}
+        <div className="bg-white rounded-lg border border-gray-200 p-3 overflow-x-auto">
+          <div
+            className="transition-all duration-300"
+            style={{
+              display: 'flex',
+              flexDirection: direction as React.CSSProperties['flexDirection'],
+              flexWrap: wrap as React.CSSProperties['flexWrap'],
+              justifyContent: justify,
+              alignItems,
+              alignContent,
+              gap,
+              // nowrap: 100% 너비로 justify-content 여분 공간 확보, 아이템 초과 시 가로 스크롤
+              // wrap:   300px 고정으로 줄바꿈 강제
+              width: isColumn ? '100%' : wrap !== 'nowrap' ? '300px' : '100%',
+              // wrap일 때 높이를 키워야 align-content 효과가 보임
+              height: isColumn ? 'auto' : wrap !== 'nowrap' ? '260px' : '140px',
+              minHeight: isColumn ? '180px' : undefined,
+            }}
+          >
+            {['A', 'B', 'C', 'D', 'E', 'F'].map((letter, i) => (
+              <div
+                key={letter}
+                className={`${COLORS[i]} text-white font-bold text-sm rounded-lg flex items-center justify-center transition-all duration-300`}
+                style={{
+                  width: isColumn ? '100%' : '64px',
+                  height: isColumn ? '44px' : '64px',
+                  minWidth: isColumn ? undefined : '64px',
+                  minHeight: isColumn ? '44px' : undefined,
+                  flexShrink: 0,
+                }}
+              >
+                {letter}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Generated CSS */}
+      <div className="bg-gray-950 rounded-xl p-4 text-xs font-mono leading-relaxed">
+        <span className="text-gray-500">.container {'{'}</span>
+        <div className="pl-5 mt-1 space-y-0.5">
+          <div><span className="text-sky-400">display</span><span className="text-gray-400">: </span><span className="text-orange-300">flex</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-sky-400">flex-direction</span><span className="text-gray-400">: </span><span className="text-orange-300">{direction}</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-sky-400">flex-wrap</span><span className="text-gray-400">: </span><span className="text-orange-300">{wrap}</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-gray-600">{'/* flex-flow: '}</span><span className="text-gray-500">{direction} {wrap}</span><span className="text-gray-600">{' */'}</span></div>
+          <div><span className="text-sky-400">justify-content</span><span className="text-gray-400">: </span><span className="text-orange-300">{justify}</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-sky-400">align-items</span><span className="text-gray-400">: </span><span className="text-orange-300">{alignItems}</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-sky-400">align-content</span><span className="text-gray-400">: </span><span className="text-orange-300">{alignContent}</span><span className="text-gray-400">;</span></div>
+          <div><span className="text-sky-400">gap</span><span className="text-gray-400">: </span><span className="text-orange-300">{gap}</span><span className="text-gray-400">;</span></div>
+        </div>
+        <span className="text-gray-500">{'}'}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────── 14번 슬라이드 요소 선택 시각화 ───────────── */
+
+function DOMSelectorPreview() {
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const selectors: { label: string; code: string; targets: string[]; desc: string }[] = [
+    {
+      label: 'getElementById',
+      code: "getElementById('header')",
+      targets: ['header'],
+      desc: 'id="header" 인 요소 1개만 선택됩니다.',
+    },
+    {
+      label: 'getElementsByClassName',
+      code: "getElementsByClassName('item')",
+      targets: ['item1', 'item2', 'item3'],
+      desc: 'class="item" 인 요소를 모두 선택합니다.',
+    },
+    {
+      label: "querySelector('.card')",
+      code: "querySelector('.card')",
+      targets: ['card'],
+      desc: 'class="card" 인 요소 중 첫 번째 하나만 선택됩니다.',
+    },
+    {
+      label: "querySelectorAll('button')",
+      code: "querySelectorAll('button')",
+      targets: ['btn1', 'btn2'],
+      desc: 'button 태그를 모두 선택합니다 (NodeList로 반환).',
+    },
+    {
+      label: "querySelector('p')",
+      code: "querySelector('p')",
+      targets: ['p1'],
+      desc: 'p 태그 중 첫 번째만 선택됩니다.',
+    },
+  ];
+
+  const activeTargets = selectors.find(s => s.label === selected)?.targets ?? [];
+  const activeDesc   = selectors.find(s => s.label === selected)?.desc ?? '';
+
+  const highlight = (id: string) =>
+    activeTargets.includes(id)
+      ? 'ring-2 ring-orange-400 bg-orange-50 text-orange-700 font-semibold scale-[1.02]'
+      : 'bg-gray-50 text-gray-600';
+
+  return (
+    <div className="space-y-4">
+      {/* 미니 HTML 구조 */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="text-[10px] font-mono text-gray-400 mb-3">▼ 아래 선택자를 클릭하면 선택되는 요소가 강조됩니다</p>
+        <div className="space-y-2 font-mono text-xs">
+          {/* header */}
+          <div id="header" className={`rounded-lg px-3 py-2 border transition-all duration-200 ${highlight('header')}`}>
+            <span className="text-[10px] text-gray-400 mr-2">id="header"</span>
+            🏠 Header 영역
+          </div>
+          {/* items */}
+          <div className="pl-3 space-y-1.5">
+            {[
+              { id: 'item1', label: '① 항목 — class="item"' },
+              { id: 'item2', label: '② 항목 — class="item"' },
+              { id: 'item3', label: '③ 항목 — class="item"' },
+            ].map(({ id, label }) => (
+              <div key={id} className={`rounded-lg px-3 py-1.5 border transition-all duration-200 ${highlight(id)}`}>
+                {label}
+              </div>
+            ))}
+          </div>
+          {/* card */}
+          <div id="card" className={`rounded-lg px-3 py-2 border transition-all duration-200 ${highlight('card')}`}>
+            <span className="text-[10px] text-gray-400 mr-2">class="card"</span>
+            🃏 Card 컴포넌트
+          </div>
+          {/* buttons */}
+          <div className="flex gap-2">
+            {[
+              { id: 'btn1', label: '버튼 1 — <button>' },
+              { id: 'btn2', label: '버튼 2 — <button>' },
+            ].map(({ id, label }) => (
+              <div key={id} className={`flex-1 rounded-lg px-3 py-1.5 border transition-all duration-200 ${highlight(id)}`}>
+                {label}
+              </div>
+            ))}
+          </div>
+          {/* paragraphs */}
+          <div className={`rounded-lg px-3 py-1.5 border transition-all duration-200 ${highlight('p1')}`}>
+            <span className="text-[10px] text-gray-400 mr-2">&lt;p&gt;</span>
+            첫 번째 단락 텍스트
+          </div>
+          <div className={`rounded-lg px-3 py-1.5 border transition-all duration-200 ${highlight('p2')}`}>
+            <span className="text-[10px] text-gray-400 mr-2">&lt;p&gt;</span>
+            두 번째 단락 텍스트
+          </div>
+        </div>
+      </div>
+
+      {/* 선택자 버튼 */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="text-[10px] font-mono text-gray-400 mb-3">▼ 선택자를 클릭해보세요</p>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {selectors.map(s => (
+            <button
+              key={s.label}
+              onClick={() => setSelected(prev => prev === s.label ? null : s.label)}
+              className={`text-[11px] font-mono px-3 py-1.5 rounded-lg border transition-all duration-150 ${
+                selected === s.label
+                  ? 'bg-gray-950 text-orange-400 border-gray-950'
+                  : 'bg-white text-gray-600 border-gray-300 hover:border-gray-500'
+              }`}
+            >
+              {s.code}
+            </button>
+          ))}
+          {selected && (
+            <button onClick={() => setSelected(null)} className="text-[11px] font-mono px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-100">
+              선택 해제
+            </button>
+          )}
+        </div>
+        {selected && (
+          <div className="bg-gray-950 rounded-lg px-4 py-3 text-[11px] font-mono">
+            <span className="text-orange-400">선택된 요소: </span>
+            <span className="text-green-400">{activeTargets.length}개</span>
+            <span className="text-gray-400 ml-3">→ {activeDesc}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ───────────── 14번 슬라이드 DOM 플레이그라운드 ───────────── */
+
+function DOMPlayground() {
+  // ① textContent vs innerHTML
+  const [displayText, setDisplayText] = useState('원본 텍스트입니다.');
+  const [isHtml, setIsHtml] = useState(false);
+
+  // ② classList
+  const [activeClass, setActiveClass] = useState(false);
+  const [highlightClass, setHighlightClass] = useState(false);
+  const [largeClass, setLargeClass] = useState(false);
+
+  // ③ setAttribute
+  const [linkHref, setLinkHref] = useState('https://example.com');
+  const [imgAlt, setImgAlt] = useState('기본 설명');
+
+  // ④ createElement & appendChild
+  const [listItems, setListItems] = useState(['기존 항목 1', '기존 항목 2']);
+  const [itemCount, setItemCount] = useState(3);
+
+  const activeClasses = [
+    activeClass && 'bg-orange-400 text-white',
+    highlightClass && 'ring-4 ring-orange-300',
+    largeClass && 'text-2xl font-black',
+  ].filter(Boolean).join(' ');
+
+  const classNames = [
+    activeClass && 'active',
+    highlightClass && 'highlight',
+    largeClass && 'large',
+  ].filter(Boolean) as string[];
+
+  const btnBase = 'text-[11px] font-mono px-2.5 py-1.5 rounded-lg border transition-colors cursor-pointer';
+  const btnDark = `${btnBase} bg-gray-950 text-white border-gray-950 hover:bg-gray-700`;
+  const btnOutline = `${btnBase} bg-white text-gray-700 border-gray-300 hover:bg-gray-100`;
+  const btnRed = `${btnBase} bg-red-500 text-white border-red-500 hover:bg-red-600`;
+
+  return (
+    <div className="space-y-6 text-sm">
+
+      {/* ① textContent / innerHTML */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">
+          ① textContent / innerHTML
+        </p>
+        <div className="min-h-[48px] bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 mb-3 text-gray-800">
+          {isHtml
+            ? <span dangerouslySetInnerHTML={{ __html: displayText }} />
+            : <span>{displayText}</span>
+          }
+        </div>
+        <div className="flex flex-wrap gap-2 mb-2">
+          <button className={btnDark} onClick={() => { setDisplayText('textContent로 변경된 텍스트'); setIsHtml(false); }}>
+            .textContent = "텍스트"
+          </button>
+          <button className={btnDark} onClick={() => { setDisplayText('<strong>굵게</strong> + <em style="color:#f97316">주황 기울임</em>'); setIsHtml(true); }}>
+            .innerHTML = "&lt;strong&gt;...&lt;/em&gt;"
+          </button>
+          <button className={btnOutline} onClick={() => { setDisplayText('원본 텍스트입니다.'); setIsHtml(false); }}>
+            초기화
+          </button>
+        </div>
+        <p className="text-[10px] text-gray-400 font-mono">
+          현재: {isHtml ? 'innerHTML (HTML 태그 해석 O)' : 'textContent (태그 무시, 순수 텍스트)'}
+        </p>
+      </div>
+
+      {/* ② classList */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">
+          ② classList.add / remove / toggle
+        </p>
+        <div className={`rounded-xl px-6 py-5 mb-3 text-center border-2 border-dashed border-gray-200 transition-all duration-300 ${activeClasses || 'bg-gray-50 text-gray-500'}`}>
+          <span className="font-mono text-sm">
+            .box{classNames.length > 0 ? ` .${classNames.join(' .')}` : ' (클래스 없음)'}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button className={btnDark} onClick={() => setActiveClass(true)}>classList.add('active')</button>
+          <button className={btnOutline} onClick={() => setActiveClass(false)}>classList.remove('active')</button>
+          <button className={activeClass ? btnRed : btnDark} onClick={() => setHighlightClass(v => !v)}>
+            classList.toggle('highlight') → {highlightClass ? 'remove' : 'add'}
+          </button>
+          <button className={largeClass ? btnRed : btnDark} onClick={() => setLargeClass(v => !v)}>
+            classList.toggle('large') → {largeClass ? 'remove' : 'add'}
+          </button>
+        </div>
+      </div>
+
+      {/* ③ setAttribute / getAttribute */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">
+          ③ setAttribute / getAttribute
+        </p>
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 space-y-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[11px] font-mono text-gray-500">현재 href:</span>
+            <a href={linkHref} target="_blank" rel="noopener noreferrer"
+               className="text-[11px] font-mono text-blue-600 underline break-all">
+              {linkHref}
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono text-gray-500">alt 속성:</span>
+            <span className="text-[11px] font-mono text-gray-700">"{imgAlt}"</span>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 mb-2">
+          <button className={btnDark} onClick={() => setLinkHref('https://google.com')}>
+            setAttribute('href', 'google.com')
+          </button>
+          <button className={btnDark} onClick={() => setLinkHref('https://naver.com')}>
+            setAttribute('href', 'naver.com')
+          </button>
+          <button className={btnDark} onClick={() => setImgAlt('변경된 alt 텍스트')}>
+            setAttribute('alt', '변경')
+          </button>
+          <button className={btnOutline} onClick={() => { setLinkHref('https://example.com'); setImgAlt('기본 설명'); }}>
+            초기화
+          </button>
+        </div>
+        <p className="text-[10px] font-mono text-gray-400">
+          getAttribute('href') → "{linkHref}"
+        </p>
+      </div>
+
+      {/* ④ createElement & appendChild / removeChild */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">
+          ④ createElement / appendChild / removeChild
+        </p>
+        <ul className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 space-y-1.5 min-h-[60px]">
+          {listItems.map((item, i) => (
+            <li key={i} className={`flex items-center gap-2 text-[12px] font-mono ${i < 2 ? 'text-gray-500' : 'text-orange-600 font-semibold'}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${i < 2 ? 'bg-gray-400' : 'bg-orange-400'}`} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-2">
+          <button className={btnDark} onClick={() => {
+            const label = `새로 추가된 항목 ${itemCount}`;
+            setListItems(p => [...p, label]);
+            setItemCount(c => c + 1);
+          }}>
+            createElement + appendChild
+          </button>
+          <button className={btnRed} onClick={() => {
+            if (listItems.length > 2) setListItems(p => p.slice(0, -1));
+          }} disabled={listItems.length <= 2}>
+            removeChild (마지막 제거)
+          </button>
+          <button className={btnOutline} onClick={() => { setListItems(['기존 항목 1', '기존 항목 2']); setItemCount(3); }}>
+            초기화
+          </button>
+        </div>
+        <p className="text-[10px] font-mono text-gray-400 mt-2">
+          주황색 = JS로 생성된 요소 / 회색 = 원래 있던 요소
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ───────────── 15번 슬라이드 이벤트 리스너 플레이그라운드 ───────────── */
+
+function EventPlayground() {
+  const [clickLog, setClickLog] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [hovered, setHovered] = useState(false);
+  const [keyLog, setKeyLog] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  const addLog = (setter: React.Dispatch<React.SetStateAction<string[]>>, msg: string) =>
+    setter(prev => [`${new Date().toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} ${msg}`, ...prev].slice(0, 4));
+
+  const LogBox = ({ logs, label }: { logs: string[]; label: string }) => (
+    <div className="mt-2 bg-gray-950 rounded-lg p-2 min-h-[52px]">
+      <p className="text-[9px] font-mono text-gray-500 mb-1">{label}</p>
+      {logs.length === 0
+        ? <p className="text-[10px] font-mono text-gray-600 italic">— 아직 이벤트 없음 —</p>
+        : logs.map((l, i) => <p key={i} className="text-[10px] font-mono text-green-400">{l}</p>)
+      }
+    </div>
+  );
+
+  const btnBase = 'text-xs font-mono px-3 py-1.5 rounded-lg transition-all duration-150 cursor-pointer';
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+
+      {/* ① click 이벤트 */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-[10px] text-orange-500 uppercase tracking-widest mb-1">① click 이벤트</p>
+        <p className="text-[11px] text-gray-500 mb-3">
+          <code className="bg-gray-100 px-1 rounded">#myBtn</code> 을 선택 →
+          <code className="bg-gray-100 px-1 rounded ml-1">addEventListener('click', ...)</code>
+        </p>
+        <div className="flex gap-2 flex-wrap">
+          <button
+            id="myBtn"
+            className={`${btnBase} bg-gray-950 text-white hover:bg-orange-400 hover:text-gray-950`}
+            onClick={() => addLog(setClickLog, 'e.target → #myBtn 클릭됨')}
+          >
+            id="myBtn" 버튼
+          </button>
+          <button
+            className={`${btnBase} bg-gray-100 text-gray-700 hover:bg-gray-200`}
+            onClick={() => addLog(setClickLog, 'e.target → 다른 버튼 클릭됨')}
+          >
+            다른 버튼
+          </button>
+        </div>
+        <LogBox logs={clickLog} label="console.log(e.target)" />
+      </div>
+
+      {/* ② input 이벤트 */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-[10px] text-orange-500 uppercase tracking-widest mb-1">② input 이벤트</p>
+        <p className="text-[11px] text-gray-500 mb-3">
+          <code className="bg-gray-100 px-1 rounded">.search-input</code> 선택 →
+          <code className="bg-gray-100 px-1 rounded ml-1">addEventListener('input', ...)</code>
+        </p>
+        <input
+          className="search-input w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-orange-400"
+          placeholder="타이핑해보세요..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <div className="mt-2 bg-gray-950 rounded-lg p-2 min-h-[52px]">
+          <p className="text-[9px] font-mono text-gray-500 mb-1">console.log(e.target.value)</p>
+          <p className="text-[10px] font-mono text-green-400">
+            {inputValue ? `"${inputValue}"` : <span className="text-gray-600 italic">— 아직 입력 없음 —</span>}
+          </p>
+        </div>
+      </div>
+
+      {/* ③ mouseenter / mouseleave */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-[10px] text-orange-500 uppercase tracking-widest mb-1">③ mouseenter / mouseleave</p>
+        <p className="text-[11px] text-gray-500 mb-3">
+          <code className="bg-gray-100 px-1 rounded">.box</code> 위에 마우스를 올려보세요
+        </p>
+        <div
+          className={`box rounded-xl h-16 flex items-center justify-center font-mono text-sm font-bold transition-all duration-300 cursor-pointer select-none ${hovered ? 'bg-orange-400 text-gray-950 scale-105' : 'bg-gray-100 text-gray-500'}`}
+          onMouseEnter={() => { setHovered(true); addLog(setKeyLog, 'mouseenter → bg = orange'); }}
+          onMouseLeave={() => { setHovered(false); addLog(setKeyLog, 'mouseleave → bg = gray'); }}
+        >
+          {hovered ? '🟠 mouseenter 발생!' : '마우스를 올려보세요'}
+        </div>
+        <LogBox logs={keyLog} label="이벤트 로그" />
+      </div>
+
+      {/* ④ submit + querySelectorAll */}
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <p className="font-mono text-[10px] text-orange-500 uppercase tracking-widest mb-1">④ submit + querySelectorAll</p>
+        <p className="text-[11px] text-gray-500 mb-2">
+          폼 제출 시 <code className="bg-gray-100 px-1 rounded">e.preventDefault()</code> 로 새로고침 방지
+        </p>
+        <form onSubmit={(e) => { e.preventDefault(); setSubmitted(inputValue || '(빈 값)'); }} className="flex gap-2 mb-2">
+          <input className="flex-1 border border-gray-300 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-orange-400" placeholder="이름 입력..." />
+          <button type="submit" className={`${btnBase} bg-gray-950 text-white hover:bg-orange-400 hover:text-gray-950`}>제출</button>
+        </form>
+        <p className="text-[11px] text-gray-500 mb-2">querySelectorAll('.item') 로 여러 항목 동시 연결:</p>
+        <div className="flex gap-1.5 flex-wrap">
+          {['항목 A', '항목 B', '항목 C'].map(item => (
+            <button
+              key={item}
+              className={`item text-[11px] font-mono px-2.5 py-1 rounded-lg border transition-all ${selectedItem === item ? 'bg-gray-950 text-white border-gray-950' : 'border-gray-300 text-gray-600 hover:bg-gray-100'}`}
+              onClick={() => setSelectedItem(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <div className="mt-2 bg-gray-950 rounded-lg p-2 min-h-[40px]">
+          <p className="text-[10px] font-mono text-green-400">
+            {submitted ? `submit → 제출됨 | ` : ''}{selectedItem ? `e.target.textContent → "${selectedItem}"` : <span className="text-gray-600 italic">— 항목을 클릭해보세요 —</span>}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ───────────── 05번 슬라이드 시맨틱 태그 미리보기 ───────────── */
 
 function SemanticTagsPreview() {
-  const tags = [
-    { tag: '<header>', color: 'bg-gray-900 text-white', border: 'border-gray-900', desc: '페이지 최상단 · 로고, 내비게이션 포함', role: '헤더' },
-    { tag: '<nav>', color: 'bg-gray-700 text-white', border: 'border-gray-700', desc: '링크 목록 · 메뉴, 탭, 사이드 내비게이션', role: '내비게이션' },
-    { tag: '<main>', color: 'bg-blue-600 text-white', border: 'border-blue-600', desc: '페이지의 핵심 콘텐츠 · 페이지당 하나만', role: '메인 콘텐츠' },
-    { tag: '<section>', color: 'bg-blue-400 text-white', border: 'border-blue-400', desc: '주제별로 묶인 콘텐츠 블록', role: '섹션' },
-    { tag: '<article>', color: 'bg-sky-500 text-white', border: 'border-sky-500', desc: '독립적인 글·카드·뉴스 (혼자서도 의미 있음)', role: '아티클' },
-    { tag: '<aside>', color: 'bg-amber-500 text-white', border: 'border-amber-500', desc: '부가 정보 · 광고, 관련 링크, 사이드바', role: '사이드바' },
-    { tag: '<footer>', color: 'bg-gray-600 text-white', border: 'border-gray-600', desc: '페이지 최하단 · 저작권, 연락처', role: '푸터' },
-    { tag: '<div>', color: 'bg-gray-100 text-gray-400', border: 'border-dashed border-gray-300', desc: '의미 없는 범용 컨테이너 — 스타일/레이아웃 목적으로만 사용', role: '(의미 없음)' },
-  ];
-  return (
-    <div className="space-y-2">
-      <p className="text-xs font-mono text-gray-400 mb-3">각 태그의 역할과 위치</p>
-      {tags.map(({ tag, color, border, desc, role }) => (
-        <div key={tag} className={`flex items-start gap-3 rounded-lg border ${border} overflow-hidden`}>
-          <div className={`${color} px-3 py-2.5 font-mono text-xs font-bold whitespace-nowrap min-w-[130px] flex items-center`}>
-            {tag}
+  const tags: {
+    tag: string;
+    badgeColor: string;
+    border: string;
+    role: string;
+    desc: string;
+    preview: React.ReactNode;
+  }[] = [
+    {
+      tag: '<header>',
+      badgeColor: 'bg-gray-900 text-white',
+      border: 'border-gray-200',
+      role: '헤더',
+      desc: '페이지 최상단 · 로고, 내비게이션 포함',
+      preview: (
+        <div className="bg-gray-900 text-white rounded-lg px-4 py-2.5 flex items-center justify-between">
+          <span className="font-bold text-sm">🌐 MyBlog</span>
+          <div className="flex gap-3 text-xs text-gray-300">
+            <span>홈</span><span>소개</span><span>연락처</span>
           </div>
-          <div className="py-2.5 pr-3 flex-1 min-w-0">
-            <span className="text-xs font-semibold text-gray-700 mr-2">{role}</span>
-            <span className="text-xs text-gray-500">{desc}</span>
+        </div>
+      ),
+    },
+    {
+      tag: '<nav>',
+      badgeColor: 'bg-gray-700 text-white',
+      border: 'border-gray-200',
+      role: '내비게이션',
+      desc: '링크 목록 · 메뉴, 탭, 사이드 내비게이션',
+      preview: (
+        <div className="bg-white border border-gray-200 rounded-lg p-2 flex gap-1">
+          {['홈', '제품', '가격', '고객 사례', '로그인'].map((item, i) => (
+            <span key={item} className={`text-xs px-3 py-1.5 rounded-md font-medium cursor-pointer ${i === 0 ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'}`}>
+              {item}
+            </span>
+          ))}
+        </div>
+      ),
+    },
+    {
+      tag: '<main>',
+      badgeColor: 'bg-blue-600 text-white',
+      border: 'border-blue-100',
+      role: '메인 콘텐츠',
+      desc: '페이지의 핵심 콘텐츠 · 페이지당 하나만',
+      preview: (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+          <h2 className="text-sm font-bold text-blue-900 mb-1">페이지 제목</h2>
+          <p className="text-xs text-blue-700 leading-relaxed">여기에 핵심 콘텐츠가 들어갑니다. header와 footer를 제외한 주요 내용 전체입니다.</p>
+        </div>
+      ),
+    },
+    {
+      tag: '<section>',
+      badgeColor: 'bg-sky-500 text-white',
+      border: 'border-sky-100',
+      role: '섹션',
+      desc: '주제별로 묶인 콘텐츠 블록 · h2/h3 제목과 함께 사용',
+      preview: (
+        <div className="bg-sky-50 border border-sky-200 rounded-lg p-3 space-y-1.5">
+          <h3 className="text-xs font-bold text-sky-800 border-b border-sky-200 pb-1">📌 인기 강좌</h3>
+          <p className="text-xs text-sky-700">HTML · CSS · JavaScript 강좌 목록이 이 섹션에 표시됩니다.</p>
+        </div>
+      ),
+    },
+    {
+      tag: '<article>',
+      badgeColor: 'bg-indigo-500 text-white',
+      border: 'border-indigo-100',
+      role: '아티클',
+      desc: '독립적인 글·카드·뉴스 · 단독으로도 의미 있는 콘텐츠',
+      preview: (
+        <div className="bg-white border border-indigo-200 rounded-xl p-3 shadow-sm max-w-xs">
+          <div className="flex gap-2 mb-2">
+            <span className="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-semibold">CSS</span>
+            <span className="text-[10px] text-gray-400">2026.03.17</span>
+          </div>
+          <h4 className="text-xs font-bold text-gray-800 mb-1">Flexbox 완벽 가이드</h4>
+          <p className="text-[10px] text-gray-500 leading-relaxed">Flexbox의 모든 속성을 한 곳에 정리했습니다.</p>
+        </div>
+      ),
+    },
+    {
+      tag: '<aside>',
+      badgeColor: 'bg-amber-500 text-white',
+      border: 'border-amber-100',
+      role: '사이드바',
+      desc: '부가 정보 · 광고, 관련 링크, 프로필 위젯',
+      preview: (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 max-w-[180px]">
+          <p className="text-[10px] font-bold text-amber-800 mb-1.5">📎 관련 글</p>
+          {['CSS Grid 입문', 'JS 이벤트 총정리', '반응형 웹 만들기'].map(t => (
+            <p key={t} className="text-[10px] text-amber-700 underline cursor-pointer mb-0.5">→ {t}</p>
+          ))}
+        </div>
+      ),
+    },
+    {
+      tag: '<footer>',
+      badgeColor: 'bg-gray-600 text-white',
+      border: 'border-gray-200',
+      role: '푸터',
+      desc: '페이지 최하단 · 저작권, 연락처, 링크 모음',
+      preview: (
+        <div className="bg-gray-800 text-gray-300 rounded-lg px-4 py-2.5 flex items-center justify-between">
+          <span className="text-[10px]">© 2026 MyBlog. All rights reserved.</span>
+          <div className="flex gap-3 text-[10px] text-gray-400">
+            <span className="underline cursor-pointer">이용약관</span>
+            <span className="underline cursor-pointer">개인정보처리방침</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      tag: '<div>',
+      badgeColor: 'bg-gray-100 text-gray-400',
+      border: 'border-dashed border-gray-300',
+      role: '(의미 없음)',
+      desc: '범용 컨테이너 — 시맨틱 의미 없음, 레이아웃 목적으로만 사용',
+      preview: (
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-3 bg-gray-50">
+          <p className="text-[10px] text-gray-400 font-mono text-center">&lt;div&gt; — 브라우저는 이 태그에 아무 의미도 부여하지 않습니다</p>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <p className="text-xs font-mono text-gray-400">각 태그의 역할 · 설명 · 실제 화면 예시</p>
+      {tags.map(({ tag, badgeColor, border, role, desc, preview }) => (
+        <div key={tag} className={`rounded-xl border ${border} overflow-hidden`}>
+          {/* 태그 정보 헤더 */}
+          <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 border-b border-gray-100">
+            <code className={`${badgeColor} px-2.5 py-1 font-mono text-xs font-bold rounded-md whitespace-nowrap`}>
+              {tag}
+            </code>
+            <span className="text-xs font-semibold text-gray-800">{role}</span>
+            <span className="text-xs text-gray-400 hidden sm:inline">{desc}</span>
+          </div>
+          {/* 실제 렌더링 예시 */}
+          <div className="p-3 bg-white">
+            {preview}
           </div>
         </div>
       ))}
@@ -334,7 +1100,11 @@ function PaginationPreview() {
 const demoComponents: Record<string, JSX.Element> = {
   '05-semantic':     <SemanticTagsPreview />,
   '05-layout':       <LayoutPreview />,
+  '08-playground':   <FlexboxPlayground />,
   '10-transition':   <TransitionPreview />,
+  '14-select':       <DOMSelectorPreview />,
+  '14-dom':          <DOMPlayground />,
+  '15-events':       <EventPlayground />,
   '10-animation':    <AnimationPreview />,
   '10-transform':    <TransformPreview />,
   '10-intersection': <IntersectionPreview />,
@@ -456,38 +1226,6 @@ export function BasicDemo({ slideId, demoId }: { slideId: string; demoId?: strin
         </p>
       </div>
     ),
-    '08': (
-      <div className="bg-white rounded-xl p-8 border-2 border-indigo-200">
-        <h3 className="text-xl font-bold text-gray-800 mb-6">Flexbox 레이아웃</h3>
-        
-        <div className="space-y-6">
-          <div>
-            <p className="text-sm text-gray-600 mb-2">justify-content: space-between</p>
-            <div className="flex justify-between gap-4 bg-indigo-50 p-4 rounded-lg">
-              <div className="w-20 h-20 bg-indigo-500 rounded-lg flex items-center justify-center text-white font-bold">1</div>
-              <div className="w-20 h-20 bg-indigo-500 rounded-lg flex items-center justify-center text-white font-bold">2</div>
-              <div className="w-20 h-20 bg-indigo-500 rounded-lg flex items-center justify-center text-white font-bold">3</div>
-            </div>
-          </div>
-          
-          <div>
-            <p className="text-sm text-gray-600 mb-2">justify-content: center, align-items: center</p>
-            <div className="flex justify-center items-center bg-purple-50 p-4 rounded-lg h-32">
-              <div className="w-20 h-20 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold">중앙</div>
-            </div>
-          </div>
-          
-          <div>
-            <p className="text-sm text-gray-600 mb-2">flex: 1 (비율로 크기 지정)</p>
-            <div className="flex gap-4 bg-pink-50 p-4 rounded-lg">
-              <div className="flex-1 h-16 bg-pink-400 rounded-lg flex items-center justify-center text-white font-bold">flex: 1</div>
-              <div className="flex-[2] h-16 bg-pink-500 rounded-lg flex items-center justify-center text-white font-bold">flex: 2</div>
-              <div className="flex-1 h-16 bg-pink-400 rounded-lg flex items-center justify-center text-white font-bold">flex: 1</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
     '09': (
       <div className="bg-white rounded-xl p-8 border-2 border-teal-200">
         <h3 className="text-xl font-bold text-gray-800 mb-6">반응형 레이아웃</h3>
@@ -514,69 +1252,6 @@ export function BasicDemo({ slideId, demoId }: { slideId: string; demoId?: strin
             <span className="hidden md:inline lg:hidden">📱 태블릿</span>
             <span className="hidden lg:inline">💻 데스크톱</span>
           </p>
-        </div>
-      </div>
-    ),
-    '14': (
-      <div className="bg-white rounded-xl p-8 border-2 border-cyan-200">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">DOM 조작 예시</h3>
-        
-        <div className="space-y-4">
-          <div>
-            <button
-              onClick={() => {
-                const el = document.getElementById('demo-text');
-                if (el) el.textContent = '텍스트가 변경되었습니다!';
-              }}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
-            >
-              텍스트 변경
-            </button>
-            <p id="demo-text" className="mt-2 text-gray-700">원본 텍스트</p>
-          </div>
-          
-          <div>
-            <button
-              onClick={() => {
-                const el = document.getElementById('demo-box');
-                if (el) el.classList.toggle('bg-green-500');
-              }}
-              className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg"
-            >
-              스타일 토글
-            </button>
-            <div id="demo-box" className="mt-2 w-32 h-32 bg-gray-300 rounded-lg transition-colors"></div>
-          </div>
-        </div>
-      </div>
-    ),
-    '15': (
-      <div className="bg-white rounded-xl p-8 border-2 border-violet-200">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">이벤트 처리 예시</h3>
-        
-        <div className="space-y-4">
-          <div>
-            <button
-              onClick={() => alert('클릭 이벤트 발생!')}
-              className="px-6 py-3 bg-violet-500 hover:bg-violet-600 text-white rounded-lg font-medium"
-            >
-              클릭해보세요!
-            </button>
-          </div>
-          
-          <div>
-            <input
-              type="text"
-              placeholder="입력하면 아래에 표시됩니다"
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-violet-500 focus:outline-none"
-              onInput={(e) => {
-                const target = e.target as HTMLInputElement;
-                const output = document.getElementById('input-output');
-                if (output) output.textContent = target.value;
-              }}
-            />
-            <p className="mt-2 text-gray-700">입력값: <span id="input-output" className="font-semibold text-violet-600"></span></p>
-          </div>
         </div>
       </div>
     ),

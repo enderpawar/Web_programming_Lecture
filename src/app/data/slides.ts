@@ -26,7 +26,7 @@ export const slides: Slide[] = [
       {
         type: 'text',
         title: '환영합니다!',
-        content: '이 강의에서는 HTML, CSS, JavaScript의 기초를 배웁니다. 첫 번째로 브라우저에서 정보를 출력하는 방법을 알아봅시다.',
+        content: '이 강의에서는 **HTML**, **CSS**, **JavaScript**의 기초를 배웁니다. 첫 번째로 브라우저에서 정보를 출력하는 방법을 알아봅시다.',
       },
       {
         type: 'code',
@@ -64,7 +64,7 @@ console.log(result); // true 또는 false`,
       {
         type: 'text',
         title: 'HTML 문서의 기본 구조',
-        content: 'HTML 문서는 문서의 정보를 담는 <head>와 화면에 보이는 내용을 담는 <body>로 구성됩니다.',
+        content: 'HTML 문서는 문서의 정보를 담는 **<head>** 와 화면에 보이는 내용을 담는 **<body>** 로 구성됩니다.',
       },
       {
         type: 'code',
@@ -97,7 +97,7 @@ console.log(result); // true 또는 false`,
       {
         type: 'text',
         title: '텍스트를 표현하는 다양한 태그',
-        content: 'HTML은 제목(h1~h6), 단락(p), 강조(strong, em) 등 다양한 텍스트 태그를 제공합니다.',
+        content: 'HTML은 **제목(h1~h6)**, **단락(p)**, **강조(strong, em)** 등 다양한 텍스트 태그를 제공합니다.',
       },
       {
         type: 'code',
@@ -129,7 +129,7 @@ console.log(result); // true 또는 false`,
       {
         type: 'text',
         title: '링크와 이미지',
-        content: '<a> 태그로 다른 페이지로 이동하고, <img> 태그로 이미지를 표시합니다.',
+        content: '**<a>** 태그로 다른 페이지로 이동하고, **<img>** 태그로 이미지를 표시합니다.',
       },
       {
         type: 'code',
@@ -162,31 +162,31 @@ console.log(result); // true 또는 false`,
       {
         type: 'text',
         title: '시맨틱(Semantic) 태그란?',
-        content: `시맨틱(semantic)은 "의미를 가진다"는 뜻입니다.
+        content: `**시맨틱(semantic)** 은 "의미를 가진다"는 뜻입니다.
 
-<div>는 아무 의미 없는 상자지만, 시맨틱 태그는 그 안의 내용이 무엇인지 이름만 봐도 알 수 있습니다.
+**<div>** 는 아무 의미 없는 상자지만, **시맨틱 태그**는 그 안의 내용이 무엇인지 이름만 봐도 알 수 있습니다.
 
 예시:
 • <div class="header"> → 이름이 없어서 사람이 읽어야 알 수 있음
-• <header>           → 이름만 봐도 "페이지 상단"임을 즉시 알 수 있음
+• **<header>**         → 이름만 봐도 "페이지 상단"임을 즉시 알 수 있음
 
 시맨틱 태그를 쓰면:
-① 코드를 사람이 읽기 쉬워집니다 (가독성 ↑)
-② 검색 엔진(Google)이 페이지 구조를 더 잘 이해합니다 (SEO ↑)
-③ 스크린 리더(시각장애인 보조도구)가 페이지를 올바르게 읽습니다 (접근성 ↑)`,
+① 코드를 사람이 읽기 쉬워집니다 (**가독성** ↑)
+② 검색 엔진(Google)이 페이지 구조를 더 잘 이해합니다 (**SEO** ↑)
+③ 스크린 리더(시각장애인 보조도구)가 페이지를 올바르게 읽습니다 (**접근성** ↑)`,
       },
       { type: 'demo', demoId: '05-semantic' },
       {
         type: 'text',
         title: '부모 태그 안에 자식 태그를 넣으면?',
-        content: `HTML 태그는 나무(Tree) 구조처럼 서로 감쌀 수 있습니다.
+        content: `HTML 태그는 **나무(Tree) 구조**처럼 서로 감쌀 수 있습니다.
 
-바깥에 있는 태그 = 부모(Parent)
-안에 들어가는 태그 = 자식(Child)
+바깥에 있는 태그 = **부모(Parent)**
+안에 들어가는 태그 = **자식(Child)**
 
 핵심 규칙:
-• 자식은 부모 영역 안에서만 표시됩니다
-• 부모에 적용된 스타일은 자식에게 상속될 수 있습니다
+• 자식은 **부모 영역 안에서만** 표시됩니다
+• 부모에 적용된 스타일은 자식에게 **상속**될 수 있습니다
 • 부모가 숨겨지면 자식도 함께 숨겨집니다
 
 아래에서 실제로 어떻게 화면에 표시되는지 확인해보세요.`,
@@ -229,7 +229,7 @@ console.log(result); // true 또는 false`,
       {
         type: 'text',
         title: 'CSS 선택자',
-        content: 'CSS 선택자를 사용하여 스타일을 적용할 요소를 지정합니다.',
+        content: '**CSS 선택자**를 사용하여 스타일을 적용할 **요소(element)** 를 지정합니다. 태그명, **클래스(.)**,  **ID(#)** 등 다양한 방식으로 선택할 수 있습니다.',
       },
       {
         type: 'code',
@@ -283,7 +283,7 @@ button:active {
       {
         type: 'text',
         title: 'CSS 박스 모델',
-        content: '모든 HTML 요소는 박스 형태이며, content, padding, border, margin으로 구성됩니다.',
+        content: '모든 HTML 요소는 **박스(box) 형태**이며, 안쪽 내용인 **content**, 안쪽 여백 **padding**, 테두리 **border**, 바깥 여백 **margin** 의 4겹으로 구성됩니다.',
       },
       {
         type: 'code',
@@ -328,41 +328,45 @@ button:active {
     sections: [
       {
         type: 'text',
-        title: 'Flexbox',
-        content: 'Flexbox는 요소를 효율적으로 배치하고 정렬하는 강력한 레이아웃 시스템입니다.',
+        title: 'Flexbox란?',
+        content: `**display: flex** 를 부모 컨테이너에 적용하면, 자식 요소들이 **"flex 아이템"** 이 되어 자유롭게 정렬·배치됩니다.
+
+Flexbox는 두 개의 **축(axis)** 으로 동작합니다.
+• **주축(Main Axis)**: 아이템이 나열되는 방향 (기본값: 가로 →)
+• **교차축(Cross Axis)**: 주축과 수직인 방향 (기본값: 세로 ↓)
+
+**flex-direction** 으로 주축 방향을 바꾸면, 교차축도 함께 바뀝니다.`,
+      },
+      {
+        type: 'text',
+        title: '7가지 핵심 속성',
+        content: `① **flex-direction**  — 주축 방향: row / column / row-reverse / column-reverse
+② **flex-wrap**       — 줄바꿈 여부: nowrap / wrap / wrap-reverse
+③ **flex-flow**       — direction + wrap 단축 속성 (예: row wrap)
+④ **justify-content** — 주축 정렬: flex-start / center / flex-end / space-between / space-around / space-evenly
+⑤ **align-items**    — 교차축 정렬 (한 줄): stretch / center / flex-start / flex-end / baseline
+⑥ **align-content**  — 교차축 정렬 (여러 줄, wrap 필요): stretch / center / space-between / space-around
+⑦ **gap**            — 아이템 간격: 10px / 1rem 등`,
       },
       {
         type: 'code',
-        title: 'Flex 기본 사용법',
+        title: '핵심 속성 코드',
         code: `.container {
   display: flex;
-  
-  /* 주축 정렬 */
-  justify-content: center; /* flex-start, flex-end, space-between, space-around */
-  
-  /* 교차축 정렬 */
-  align-items: center; /* flex-start, flex-end, stretch */
-  
-  /* 줄바꿈 */
-  flex-wrap: wrap;
-  
-  /* 간격 */
-  gap: 20px;
-}
 
-.item {
-  /* 비율로 크기 지정 */
-  flex: 1; /* flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
-}
+  flex-direction: row;        /* 주축 방향 */
+  flex-wrap: wrap;            /* 줄바꿈 허용 */
+  /* flex-flow: row wrap; */  /* 위 두 속성의 단축형 */
 
-.item-large {
-  flex: 2; /* 2배 크기 */
+  justify-content: space-between; /* 주축 정렬 */
+  align-items: center;            /* 교차축 정렬 (한 줄) */
+  align-content: space-around;   /* 교차축 정렬 (여러 줄) */
+
+  gap: 16px;                  /* 아이템 간격 */
 }`,
         language: 'css',
       },
-      {
-        type: 'demo',
-      }
+      { type: 'demo', demoId: '08-playground' },
     ],
   },
   {
@@ -374,7 +378,7 @@ button:active {
       {
         type: 'text',
         title: '반응형 웹 디자인',
-        content: '미디어 쿼리를 사용하면 화면 크기에 따라 다른 스타일을 적용할 수 있습니다.',
+        content: '**미디어 쿼리(@media)** 를 사용하면 **화면 크기(breakpoint)** 에 따라 다른 스타일을 적용할 수 있습니다. **모바일 우선(Mobile First)** 방식으로 작성하는 것이 권장됩니다.',
       },
       {
         type: 'code',
@@ -424,14 +428,31 @@ button:active {
         title: 'CSS 움직임의 4가지 핵심',
         content: `웹에서 움직임을 만드는 방법은 크게 4가지입니다.
 
-① transition — 상태 변화(hover 등)를 부드럽게 연결
-② animation + @keyframes — 독립적으로 반복 실행되는 움직임
-③ transform — 요소를 이동·확대·회전·기울이기
-④ Intersection Observer — 스크롤 시 요소가 화면에 들어오면 애니메이션 실행`,
+① **transition** — 상태 변화(hover 등)를 부드럽게 연결
+② **animation** + **@keyframes** — 독립적으로 반복 실행되는 움직임
+③ **transform** — 요소를 이동·확대·회전·기울이기
+④ **Intersection Observer** — 스크롤 시 요소가 화면에 들어오면 애니메이션 실행`,
+      },
+      {
+        type: 'text',
+        title: '① Transition — 부드러운 상태 변화',
+        content: `**transition** 은 요소의 CSS 속성값이 바뀔 때 즉각 변하지 않고 서서히 바뀌게 해줍니다.
+
+작성 형식: **transition: 속성명  지속시간  easing  지연시간**
+
+• **속성명**: 어떤 CSS 속성에 전환 효과를 줄지 지정합니다 (background-color, transform 등). **all** 이라고 쓰면 모든 속성에 적용됩니다.
+• **지속시간(duration)**: 전환이 얼마나 걸릴지 설정합니다. 0.3s = 0.3초, 300ms = 300밀리초로 표현합니다.
+• **easing(타이밍 함수)**: 속도의 변화 곡선을 지정합니다.
+  - **ease**: 처음 빠르다가 끝에 느려짐 (가장 자연스러움, 기본값)
+  - **linear**: 처음부터 끝까지 일정한 속도
+  - **ease-in**: 처음에 느리다가 점점 빨라짐
+  - **ease-out**: 처음에 빠르다가 점점 느려짐
+• **지연시간(delay)**: 변화가 시작되기까지 기다리는 시간입니다. 생략하면 0s (바로 시작).
+• **:hover**: 마우스를 요소 위에 올렸을 때 적용되는 CSS 상태입니다.`,
       },
       {
         type: 'code',
-        title: '① Transition',
+        title: '① Transition 코드',
         code: `/* transition: 속성 시간 easing 지연 */
 .button {
   background-color: #3b82f6;
@@ -455,8 +476,25 @@ button:active {
       },
       { type: 'demo', demoId: '10-transition' },
       {
+        type: 'text',
+        title: '② Animation & @keyframes — 자동 반복 애니메이션',
+        content: `**animation** 은 hover 같은 상태 변화 없이도 요소가 스스로 계속 움직이게 합니다.
+**@keyframes** 로 동작의 중간 과정(타임라인)을 먼저 정의한 뒤, **animation** 속성으로 요소에 적용합니다.
+
+@keyframes 작성법:
+• **from ~ to**: 시작과 끝 두 단계만 지정할 때 사용합니다.
+• **0% ~ 100%**: 퍼센트로 중간 단계를 세밀하게 지정할 때 사용합니다. (예: 0%, 50%, 100%)
+
+animation 속성 순서: **animation: 이름  시간  easing  반복횟수**
+• **이름**: @keyframes 뒤에 붙인 이름과 일치해야 합니다.
+• **시간**: 한 사이클이 완료되는 데 걸리는 시간입니다.
+• **infinite**: 무한 반복을 의미합니다. 숫자를 쓰면 그 횟수만큼 반복합니다.
+• **forwards**: 애니메이션이 끝난 후 마지막 상태를 유지합니다. (없으면 원래 자리로 돌아감)
+• **opacity**: 요소의 투명도입니다. 0 = 완전 투명, 1 = 완전 불투명`,
+      },
+      {
         type: 'code',
-        title: '② Animation & @keyframes',
+        title: '② Animation & @keyframes 코드',
         code: `@keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -479,8 +517,26 @@ button:active {
       },
       { type: 'demo', demoId: '10-animation' },
       {
+        type: 'text',
+        title: '③ Transform — 위치·크기·각도 변환',
+        content: `**transform** 은 요소의 위치, 크기, 각도를 변환합니다. **레이아웃(주변 요소 배치)에 영향을 주지 않고** 시각적으로만 변환되기 때문에 성능이 좋습니다.
+
+주요 함수:
+• **translate(x, y)**: 요소를 X축(가로), Y축(세로)으로 이동시킵니다. translateY(-4px)는 위로 4px 이동.
+• **scale(n)**: 요소를 n배 크기로 확대/축소합니다. scale(1.5) = 1.5배, scale(0.5) = 절반.
+• **rotate(각도)**: 요소를 시계 방향으로 회전시킵니다. 단위는 **deg(도)** 입니다.
+• **skew(x, y)**: 요소를 X·Y축 방향으로 기울입니다.
+
+여러 개를 동시에 쓸 때는 공백으로 이어 씁니다. **순서에 따라 결과가 달라집니다.**
+
+3D Transform:
+• **perspective**: 3D 효과를 얼마나 강하게 줄지 설정합니다. 숫자가 작을수록 원근감이 강해집니다.
+• **rotateY**: Y축(세로축)을 중심으로 회전합니다. 카드 뒤집기 효과에 많이 씁니다.
+• **transform-origin**: 변환의 기준점(중심점)을 바꿉니다. 기본값은 center center(요소 정중앙)입니다.`,
+      },
+      {
         type: 'code',
-        title: '③ Transform — 이동 / 확대 / 회전 / 기울이기',
+        title: '③ Transform 코드',
         code: `/* 2D Transform */
 .translate { transform: translate(50px, 20px); }  /* X, Y 이동 */
 .scale     { transform: scale(1.5); }              /* 1.5배 확대 */
@@ -507,8 +563,28 @@ button:active {
       },
       { type: 'demo', demoId: '10-transform' },
       {
+        type: 'text',
+        title: '④ Intersection Observer — 스크롤 감지 애니메이션',
+        content: `**Intersection Observer** 는 특정 요소가 **화면(뷰포트)** 안에 들어오거나 나가는 순간을 감지하는 JavaScript API입니다.
+스크롤을 내리면 요소가 서서히 나타나는 **"scroll reveal"** 효과를 만들 때 주로 사용합니다.
+
+CSS 파트 용어:
+• **opacity: 0** → 처음엔 완전히 투명(보이지 않음)하게 설정합니다.
+• **translateY(40px)** → 처음엔 원래 위치보다 40px 아래에 있습니다.
+• **transition** → 나중에 JS가 .visible 클래스를 추가하면 부드럽게 나타납니다.
+
+JavaScript 파트 용어:
+• **new IntersectionObserver(콜백, 옵션)** → 관찰자 객체를 만듭니다.
+• **entries** → 관찰 중인 요소들의 목록입니다.
+• **entry.isIntersecting** → true면 요소가 화면 안에 들어온 상태입니다.
+• **classList.add('visible')** → 요소에 .visible 클래스를 추가해 CSS 효과를 발동시킵니다.
+• **observer.unobserve(el)** → 한 번 나타난 후에는 더 이상 감시하지 않습니다 (성능 최적화).
+• **threshold: 0.2** → 요소가 20% 이상 화면에 보일 때 콜백을 실행합니다. 1이면 100% 전부 보일 때.
+• **querySelectorAll('.reveal')** → .reveal 클래스가 붙은 모든 요소를 한꺼번에 선택합니다.`,
+      },
+      {
         type: 'code',
-        title: '④ Intersection Observer — 스크롤 reveal 효과',
+        title: '④ Intersection Observer — CSS',
         code: `/* CSS: 초기 상태 (숨김) */
 .reveal {
   opacity: 0;
@@ -557,7 +633,7 @@ document.querySelectorAll('.reveal').forEach(el => {
       {
         type: 'text',
         title: 'JavaScript란?',
-        content: 'JavaScript는 웹 페이지에 동적인 기능을 추가하는 프로그래밍 언어입니다.',
+        content: '**JavaScript**는 웹 페이지에 **동적인 기능**을 추가하는 **프로그래밍 언어**입니다. **HTML**이 구조, **CSS**가 디자인을 담당한다면, **JavaScript**는 버튼 클릭, 데이터 처리 등 **동작**을 담당합니다.',
       },
       {
         type: 'code',
@@ -593,37 +669,137 @@ console.log(typeof number); // "number"`,
     sections: [
       {
         type: 'text',
-        title: '변수와 연산자',
-        content: 'let, const로 변수를 선언하고, 다양한 연산을 수행할 수 있습니다.',
+        title: 'let vs const — 무엇이 다른가?',
+        content: `**변수(variable)** 란 데이터를 담아두는 이름이 붙은 상자입니다. JavaScript에서는 **let** 과 **const** 두 가지로 변수를 선언합니다.
+
+■ **let** — 나중에 값을 바꿀 수 있는 변수
+언제 쓰나요? 값이 중간에 바뀔 가능성이 있을 때 사용합니다.
+예) 사용자 나이, 카운터, 반복문 인덱스
+
+■ **const** — 한 번 정하면 값을 바꿀 수 없는 변수 (**상수, constant**)
+언제 쓰나요? 한 번 지정하면 변하지 않는 값에 사용합니다.
+예) 이름, 설정값, 고정된 URL
+
+⚠ 재할당을 시도하면 오류 발생:
+  const name = "김철수";
+  name = "이영희"; // TypeError: Assignment to constant variable.
+
+💡 원칙: 기본적으로 const를 쓰고, 값이 바뀌어야 할 때만 let으로 바꾸세요.`,
       },
       {
         type: 'code',
-        title: '변수 선언과 연산',
-        code: `// 변수 선언
-let age = 20; // 재할당 가능
-const name = "김철수"; // 재할당 불가능
+        title: 'let vs const 예시',
+        code: `// ✅ let: 재할당 가능
+let count = 0;
+count = count + 1; // OK → count는 이제 1
 
-// 산술 연산자
+// ✅ const: 재할당 불가능
+const PI = 3.14;
+// PI = 3.15; // ❌ TypeError: Assignment to constant variable.
+
+// 💡 원칙: const 먼저, 값이 바뀌어야 하면 let으로 교체
+const userName = "김철수";  // 이름은 바뀌지 않음 → const
+let score = 85;              // 점수는 바뀔 수 있음  → let
+score = 90;                  // OK`,
+        language: 'javascript',
+      },
+      {
+        type: 'text',
+        title: 'var는 왜 더 이상 쓰지 않나요?',
+        content: `**var** 는 **ES5(2009년)** 이전 문법으로, 현재는 사용을 권장하지 않습니다.
+
+var의 문제점:
+① **블록 스코프 없음**: var는 if/for 블록 안에 선언해도 블록 밖에서도 접근됩니다. let/const는 **블록 {} 안에서만** 유효합니다.
+② **중복 선언 허용**: 같은 이름으로 var를 두 번 선언해도 에러가 나지 않습니다. 실수로 덮어써도 알 수 없습니다.
+③ **호이스팅(hoisting)**: 선언하기 전에 변수에 접근해도 에러 대신 **undefined** 가 반환됩니다. 버그를 찾기 매우 어렵습니다.
+
+**ES6(2015년)** 부터 **let** 과 **const** 가 도입되어 위 문제가 모두 해결되었습니다.
+현재는 **let, const만 사용**하고 var는 사용하지 않는 것이 표준입니다.`,
+      },
+      {
+        type: 'code',
+        title: 'var의 문제점 예시',
+        code: `// ❌ 문제 1: 블록 스코프 없음
+if (true) {
+  var x = 10;  // if 블록 안에 선언했지만
+}
+console.log(x); // 10 → 블록 밖에서도 접근 가능! (버그 위험)
+
+if (true) {
+  let y = 20;  // let은 블록 안에서만 유효
+}
+// console.log(y); // ❌ ReferenceError: y is not defined (안전)
+
+// ❌ 문제 2: 중복 선언 허용
+var name = "김철수";
+var name = "이영희"; // 에러 없이 덮어씌워짐!
+console.log(name);   // "이영희" (실수인지 의도인지 모름)
+
+// let은 중복 선언 시 에러로 알려줌
+// let name = "김철수";
+// let name = "이영희"; // ❌ SyntaxError: Identifier 'name' already declared
+
+// ❌ 문제 3: 호이스팅 — 선언 전에 접근해도 에러가 안 남
+console.log(a); // undefined (에러가 아님! 찾기 힘든 버그)
+var a = 5;
+
+// let은 선언 전 접근 시 에러로 명확히 알려줌
+// console.log(b); // ❌ ReferenceError: Cannot access 'b' before initialization
+// let b = 5;`,
+        language: 'javascript',
+      },
+      {
+        type: 'text',
+        title: '연산자(Operator) 종류',
+        content: `**연산자(Operator)** 는 값을 계산하거나 비교할 때 사용하는 기호입니다.
+
+■ **산술 연산자**: 숫자 계산
+  **+** 더하기  **-** 빼기  **\*** 곱하기  **/** 나누기  **%** 나머지
+
+■ **비교 연산자**: 두 값을 비교해 true/false 반환
+  **===**  값과 타입이 모두 같으면 true (일치 연산자, 권장)
+  **!==**  값이나 타입이 다르면 true
+  **>  <  >=  <=**  크기 비교
+
+  ⚠ **==** (느슨한 일치)는 타입을 자동 변환해서 비교하므로 예상치 못한 결과가 나올 수 있습니다.
+     항상 **===** 를 쓰는 것이 안전합니다.
+
+■ **논리 연산자**: 조건을 조합
+  **&&**  AND — 둘 다 true일 때만 true
+  **||**  OR  — 하나라도 true면 true
+  **!**   NOT — true → false, false → true
+
+■ **템플릿 리터럴(Template Literal)**:
+  **백틱(\`)** 안에서 **\${변수}** 로 변수를 문자열 중간에 바로 삽입할 수 있습니다.
+  "안녕 " + name + "!" 대신 \`안녕 \${name}!\` 처럼 쓰면 훨씬 간결합니다.`,
+      },
+      {
+        type: 'code',
+        title: '연산자 예시',
+        code: `// 산술 연산자
 let a = 10 + 5; // 15
 let b = 10 - 5; // 5
 let c = 10 * 5; // 50
 let d = 10 / 5; // 2
-let e = 10 % 3; // 1 (나머지)
+let e = 10 % 3; // 1 (나머지: 10 ÷ 3 = 3 나머지 1)
 
-// 비교 연산자
-console.log(10 > 5);   // true
-console.log(10 < 5);   // false
-console.log(10 === 10); // true (일치)
-console.log(10 !== 5);  // true (불일치)
+// 비교 연산자 (항상 === 사용 권장)
+console.log(10 > 5);    // true
+console.log(10 < 5);    // false
+console.log(10 === 10); // true  (값 + 타입 일치)
+console.log(10 === "10"); // false (숫자 vs 문자열 → 불일치)
+console.log(10 !== 5);  // true
 
 // 논리 연산자
-console.log(true && false); // false (AND)
-console.log(true || false); // true (OR)
-console.log(!true);         // false (NOT)
+console.log(true && false); // false (AND: 둘 다 true여야)
+console.log(true || false); // true  (OR: 하나만 true여도)
+console.log(!true);         // false (NOT: 반전)
 
-// 문자열 연결
-const greeting = "안녕" + "하세요"; // "안녕하세요"
-const message = \`이름: \${name}, 나이: \${age}\`; // 템플릿 리터럴`,
+// 문자열 연결 vs 템플릿 리터럴
+const name = "김철수";
+const age = 20;
+const old = "이름: " + name + ", 나이: " + age; // 구식
+const modern = \`이름: \${name}, 나이: \${age}\`;   // ✅ 권장`,
         language: 'javascript',
       },
     ],
@@ -637,7 +813,7 @@ const message = \`이름: \${name}, 나이: \${age}\`; // 템플릿 리터럴`,
       {
         type: 'text',
         title: '조건문과 반복문',
-        content: '조건에 따라 다른 동작을 수행하고, 반복 작업을 효율적으로 처리할 수 있습니다.',
+        content: '**조건문(if, switch)** 은 조건에 따라 다른 동작을 수행하고, **반복문(for, while)** 은 같은 작업을 효율적으로 반복 처리할 수 있습니다.',
       },
       {
         type: 'code',
@@ -717,58 +893,58 @@ fruits.forEach((fruit, index) => {
       {
         type: 'text',
         title: 'DOM (Document Object Model)',
-        content: 'DOM은 HTML 문서를 객체로 표현한 것으로, JavaScript로 웹 페이지를 동적으로 조작할 수 있습니다.',
+        content: '**DOM(Document Object Model)** 은 HTML 문서를 **객체(object)** 로 표현한 것입니다. JavaScript로 DOM을 통해 웹 페이지의 **요소를 선택·변경·추가·삭제**할 수 있습니다.',
       },
       {
         type: 'code',
         title: '요소 선택하기',
-        code: `// ID로 선택
+        code: `// ID로 선택 — id가 'header'인 요소 1개
 const header = document.getElementById('header');
 
-// 클래스로 선택
+// 클래스로 선택 — class="item"인 요소 전체 (유사배열)
 const items = document.getElementsByClassName('item');
 
-// CSS 선택자로 선택
-const firstButton = document.querySelector('button');
-const allButtons = document.querySelectorAll('button');
+// CSS 선택자로 선택 (가장 많이 사용)
+const firstBtn = document.querySelector('button');      // 첫 번째만
+const allBtns  = document.querySelectorAll('button');   // 전부 (NodeList)
+const byClass  = document.querySelector('.card');       // 클래스
+const byId     = document.querySelector('#header');     // ID
 
-// 태그로 선택
+// 태그 이름으로 선택
 const paragraphs = document.getElementsByTagName('p');`,
         language: 'javascript',
       },
+      { type: 'demo', demoId: '14-select' },
       {
         type: 'code',
         title: '요소 조작하기',
         code: `// 텍스트 변경
 const title = document.querySelector('h1');
-title.textContent = "새로운 제목";
-title.innerHTML = "<strong>강조된</strong> 제목";
+title.textContent = "새로운 제목";        // 태그 무시, 순수 텍스트
+title.innerHTML = "<strong>강조된</strong> 제목"; // HTML 태그 해석
 
-// 스타일 변경
+// 스타일 직접 변경
 title.style.color = "blue";
 title.style.fontSize = "32px";
-title.style.backgroundColor = "yellow";
 
 // 클래스 조작
 const box = document.querySelector('.box');
-box.classList.add('active');
-box.classList.remove('inactive');
-box.classList.toggle('highlight');
+box.classList.add('active');       // 클래스 추가
+box.classList.remove('inactive');  // 클래스 제거
+box.classList.toggle('highlight'); // 있으면 제거, 없으면 추가
 
-// 속성 조작
+// 속성 변경
 const link = document.querySelector('a');
-link.setAttribute('href', 'https://example.com');
-link.getAttribute('href');
+link.setAttribute('href', 'https://google.com'); // 속성 설정
+console.log(link.getAttribute('href'));           // 속성 읽기
 
 // 요소 생성 및 추가
-const newDiv = document.createElement('div');
-newDiv.textContent = "새로운 요소";
-document.body.appendChild(newDiv);`,
+const newItem = document.createElement('li');
+newItem.textContent = "새로 추가된 항목";
+document.querySelector('ul').appendChild(newItem);`,
         language: 'javascript',
       },
-      {
-        type: 'demo',
-      }
+      { type: 'demo', demoId: '14-dom' }
     ],
   },
   {
@@ -779,57 +955,130 @@ document.body.appendChild(newDiv);`,
     sections: [
       {
         type: 'text',
-        title: '이벤트 리스너',
-        content: '사용자의 클릭, 키보드 입력, 마우스 움직임 등의 이벤트를 감지하고 처리할 수 있습니다.',
+        title: '이벤트(Event)란?',
+        content: `**이벤트(Event)** 는 웹 페이지에서 일어나는 모든 "사건"입니다.
+사용자가 버튼을 클릭하거나, 키보드를 누르거나, 마우스를 움직이는 것이 모두 이벤트입니다.
+
+JavaScript는 이 이벤트를 **감지(listen)** 하고, 이벤트가 발생했을 때 **원하는 동작을 실행**할 수 있습니다.
+이를 **이벤트 리스너(Event Listener)** 라고 합니다.
+
+자주 사용하는 이벤트 종류:
+• **click** — 마우스 클릭
+• **input** — 입력 필드에 타이핑할 때
+• **submit** — 폼 제출 버튼을 눌렀을 때
+• **keydown** — 키보드 키를 눌렀을 때
+• **mouseenter / mouseleave** — 마우스가 요소에 들어오거나 나갈 때`,
+      },
+      {
+        type: 'text',
+        title: '① 요소 선택 → ② 이벤트 연결 → ③ 동작 실행',
+        content: `이벤트 리스너는 항상 이 3단계로 동작합니다.
+
+─────────────────────────────────────────
+**① HTML에서 요소를 선택한다**
+
+HTML에 id, class, 태그가 있어야 JS에서 찾을 수 있습니다.
+
+  HTML:  <button id="myBtn" class="btn">클릭</button>
+
+  JS로 선택하는 방법 3가지:
+  • **getElementById('myBtn')** — id="myBtn" 인 요소 1개 선택
+  • **querySelector('.btn')** — class="btn" 인 첫 번째 요소 선택
+  • **querySelector('button')** — 태그 이름으로 첫 번째 선택
+  • **querySelectorAll('.btn')** — 해당하는 모든 요소 선택 (배열처럼 반환)
+
+─────────────────────────────────────────
+**② addEventListener로 이벤트를 연결한다**
+
+  요소.addEventListener('이벤트종류', 실행할함수);
+
+  • 첫 번째 인자: 감지할 이벤트 이름 (문자열)
+  • 두 번째 인자: 이벤트 발생 시 실행할 **콜백 함수(callback function)**
+
+─────────────────────────────────────────
+**③ 이벤트가 발생하면 콜백 함수가 실행된다**
+
+  콜백 함수에는 **event 객체(e)** 가 자동으로 전달됩니다.
+  이 객체에는 어떤 요소에서 발생했는지, 어떤 키를 눌렀는지 등의 정보가 들어있습니다.
+  • **e.target** — 이벤트가 발생한 요소 그 자체
+  • **e.target.value** — input 요소에 입력된 현재 값
+  • **e.key** — 눌린 키보드 키 이름
+  • **e.preventDefault()** — 브라우저의 기본 동작을 막음 (예: 폼 제출 시 페이지 새로고침 방지)`,
       },
       {
         type: 'code',
-        title: '이벤트 처리하기',
-        code: `// 클릭 이벤트
-const button = document.querySelector('button');
-button.addEventListener('click', function() {
-  alert('버튼이 클릭되었습니다!');
+        title: '요소 선택 방법 3가지',
+        code: `<!-- HTML -->
+<button id="myBtn">클릭하세요</button>
+<input class="search-input" placeholder="검색어 입력">
+<ul>
+  <li class="item">항목 1</li>
+  <li class="item">항목 2</li>
+</ul>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'addEventListener 기본 구조',
+        code: `// ① ID로 선택 → 클릭 이벤트 연결
+const btn = document.getElementById('myBtn');
+//                   ↑ id="myBtn" 인 요소를 찾아서
+
+btn.addEventListener('click', function(e) {
+//                   ↑이벤트종류  ↑ 이벤트 발생 시 실행할 함수
+  console.log('클릭됨!');
+  console.log(e.target); // 클릭된 요소 자체
 });
 
-// 화살표 함수로도 가능
-button.addEventListener('click', () => {
-  console.log('클릭!');
+// ② 클래스로 선택 (querySelector)
+const input = document.querySelector('.search-input');
+//                                   ↑ .클래스명 (CSS 선택자 문법)
+
+input.addEventListener('input', (e) => {
+  console.log('입력값:', e.target.value); // 현재 입력된 텍스트
 });
 
-// 입력 이벤트
-const input = document.querySelector('input');
-input.addEventListener('input', (event) => {
-  console.log('입력값:', event.target.value);
-});
+// ③ 여러 요소 동시 연결 (querySelectorAll → forEach)
+const items = document.querySelectorAll('.item');
+//                                       ↑ 모든 .item 요소 선택
 
-// 폼 제출 이벤트
-const form = document.querySelector('form');
-form.addEventListener('submit', (event) => {
-  event.preventDefault(); // 기본 동작 방지
-  console.log('폼 제출됨');
+items.forEach((item) => {
+  item.addEventListener('click', (e) => {
+    console.log('클릭한 항목:', e.target.textContent);
+  });
+});`,
+        language: 'javascript',
+      },
+      {
+        type: 'code',
+        title: '자주 쓰는 이벤트 종류',
+        code: `// ─ 마우스 이벤트 ─
+box.addEventListener('mouseenter', () => {  // 마우스가 요소에 들어올 때
+  box.style.backgroundColor = 'orange';
 });
-
-// 마우스 이벤트
-const box = document.querySelector('.box');
-box.addEventListener('mouseenter', () => {
-  box.style.backgroundColor = 'blue';
-});
-
-box.addEventListener('mouseleave', () => {
+box.addEventListener('mouseleave', () => {  // 마우스가 요소에서 나갈 때
   box.style.backgroundColor = 'gray';
 });
 
-// 키보드 이벤트
-document.addEventListener('keydown', (event) => {
-  console.log('누른 키:', event.key);
-  if (event.key === 'Enter') {
-    console.log('엔터 키 입력!');
+// ─ 폼 제출 이벤트 ─
+const form = document.querySelector('form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault(); // ← 이게 없으면 페이지가 새로고침됨!
+  console.log('폼 데이터 처리');
+});
+
+// ─ 키보드 이벤트 ─
+document.addEventListener('keydown', (e) => {
+  console.log('누른 키:', e.key); // 'Enter', 'ArrowUp', 'a' 등
+  if (e.key === 'Enter') {
+    console.log('엔터 입력!');
   }
 });`,
         language: 'javascript',
       },
       {
         type: 'demo',
+        demoId: '15-events',
       }
     ],
   },
@@ -842,7 +1091,7 @@ document.addEventListener('keydown', (event) => {
       {
         type: 'text',
         title: '에러의 종류와 해결 방법',
-        content: '프로그래밍 중 발생하는 다양한 에러를 이해하고 해결하는 방법을 배웁니다. F12를 눌러 콘솔을 확인하세요!',
+        content: '프로그래밍 중 발생하는 다양한 에러를 이해하고 해결하는 방법을 배웁니다. **F12** 를 눌러 **콘솔(Console)** 을 확인하세요!',
       },
       {
         type: 'error',
@@ -858,19 +1107,19 @@ document.addEventListener('keydown', (event) => {
       {
         type: 'text',
         title: '실무 UI 컴포넌트란?',
-        content: `웹 서비스는 수십 가지 반복적인 UI 패턴으로 이루어져 있습니다. 자주 쓰는 컴포넌트 이름과 구조를 알아두면 디자인 시스템을 이해하고 구현하는 속도가 빨라집니다.
+        content: `웹 서비스는 수십 가지 반복적인 **UI 패턴**으로 이루어져 있습니다. 자주 쓰는 **컴포넌트** 이름과 구조를 알아두면 **디자인 시스템**을 이해하고 구현하는 속도가 빨라집니다.
 
 주요 컴포넌트 목록:
-• NAV (Navigation Bar) — 상단 탐색 메뉴
-• Breadcrumb — 현재 위치 경로 표시
-• Modal / Dialog — 팝업 레이어
-• Dropdown / Select — 선택 목록
-• Card — 콘텐츠 묶음 박스
-• Badge / Chip — 상태·카테고리 라벨
-• Toast / Snackbar — 일시적 알림 메시지
-• FAB (Floating Action Button) — 고정 액션 버튼
-• Skeleton — 로딩 중 자리 표시자
-• Pagination — 페이지 이동 컨트롤`,
+• **NAV (Navigation Bar)** — 상단 탐색 메뉴
+• **Breadcrumb** — 현재 위치 경로 표시
+• **Modal / Dialog** — 팝업 레이어
+• **Dropdown / Select** — 선택 목록
+• **Card** — 콘텐츠 묶음 박스
+• **Badge / Chip** — 상태·카테고리 라벨
+• **Toast / Snackbar** — 일시적 알림 메시지
+• **FAB (Floating Action Button)** — 고정 액션 버튼
+• **Skeleton** — 로딩 중 자리 표시자
+• **Pagination** — 페이지 이동 컨트롤`,
       },
       {
         type: 'code',
@@ -1128,7 +1377,7 @@ document.getElementById('fabButton').addEventListener('click', () => {
       {
         type: 'text',
         title: '수고하셨습니다!',
-        content: '오늘 HTML, CSS, JavaScript의 기초를 모두 배웠습니다. 이제 여러분은 간단한 웹 페이지를 만들 수 있습니다!',
+        content: '오늘 **HTML**, **CSS**, **JavaScript**의 기초를 모두 배웠습니다. 이제 여러분은 **간단한 웹 페이지**를 만들 수 있습니다!',
       },
       {
         type: 'text',
@@ -1152,7 +1401,7 @@ document.getElementById('fabButton').addEventListener('click', () => {
       {
         type: 'text',
         title: '다음 단계',
-        content: '계속 연습하고 작은 프로젝트를 만들어보세요. 실습이 가장 중요합니다!',
+        content: '계속 연습하고 **작은 프로젝트**를 만들어보세요. **실습**이 가장 중요합니다!',
       }
     ],
   },
@@ -1165,7 +1414,7 @@ document.getElementById('fabButton').addEventListener('click', () => {
       {
         type: 'text',
         title: 'ToDo 앱 만들기',
-        content: '오늘 배운 HTML, CSS, JavaScript를 모두 활용하여 실제 동작하는 ToDo 앱을 만들어봅시다!',
+        content: '오늘 배운 **HTML**, **CSS**, **JavaScript**를 모두 활용하여 실제 동작하는 **ToDo 앱**을 만들어봅시다!',
       },
       {
         type: 'code',

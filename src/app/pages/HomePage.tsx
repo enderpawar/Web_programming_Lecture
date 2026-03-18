@@ -64,7 +64,7 @@ export function HomePage() {
               </h2>
 
               <p className="text-lg text-gray-500 max-w-2xl leading-relaxed mb-10">
-                그건 NL의 방식이 아니에요 .{' '}
+                그건 <strong className="text-black font-semibold">NL의 방식</strong>이 아니에요 .{' '}
                 <span className="text-gray-800 font-semibold">실제 프로젝트</span>같은 예제 홈페이지에서 직접 예시를 보며 배워봐요.
     
               </p>
