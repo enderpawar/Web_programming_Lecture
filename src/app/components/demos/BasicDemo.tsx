@@ -188,21 +188,37 @@ function FlexboxPlayground() {
               minHeight: isColumn ? '180px' : undefined,
             }}
           >
-            {['A', 'B', 'C', 'D', 'E', 'F'].map((letter, i) => (
-              <div
-                key={letter}
-                className={`${COLORS[i]} text-white font-bold text-sm rounded-lg flex items-center justify-center transition-all duration-300`}
-                style={{
-                  width: isColumn ? '100%' : '64px',
-                  height: isColumn ? '44px' : '64px',
-                  minWidth: isColumn ? undefined : '64px',
-                  minHeight: isColumn ? '44px' : undefined,
-                  flexShrink: 0,
-                }}
-              >
-                {letter}
-              </div>
-            ))}
+            {['A', 'B', 'C', 'D', 'E', 'F'].map((letter, i) => {
+              const baselineActive = alignItems === 'baseline' && !isColumn;
+              const fontSize =
+                baselineActive && (i === 1 || i === 4) ? '28px'
+                : baselineActive && i === 3 ? '20px'
+                : '14px';
+              const sample =
+                baselineActive
+                  ? (i === 1 ? 'Ag' : i === 3 ? 'by' : i === 4 ? 'Qp' : `${letter}g`)
+                  : letter;
+
+              return (
+                <div
+                  key={letter}
+                  className={`${COLORS[i]} text-white font-bold rounded-lg flex justify-center transition-all duration-300 ${
+                    baselineActive ? 'items-end pb-2' : 'items-center'
+                  }`}
+                  style={{
+                    width: isColumn ? '100%' : '64px',
+                    height: isColumn ? '44px' : '64px',
+                    minWidth: isColumn ? undefined : '64px',
+                    minHeight: isColumn ? '44px' : undefined,
+                    flexShrink: 0,
+                  }}
+                >
+                  <span style={{ fontSize, lineHeight: 1 }}>
+                    {sample}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
