@@ -155,48 +155,69 @@ console.log(result); // true 또는 false`,
   },
   {
     id: '05',
-    title: '레이아웃 기초',
-    description: 'div, section, article 등 레이아웃 구조 태그를 학습합니다',
+    title: '시맨틱 태그 & 레이아웃',
+    description: '의미 있는 HTML5 시맨틱 태그와 부모-자식 구조가 화면에 어떻게 표현되는지 배웁니다',
     category: '#05',
     sections: [
       {
         type: 'text',
-        title: 'HTML5 시맨틱 태그',
-        content: '의미 있는 태그를 사용하면 구조를 명확하게 표현할 수 있습니다.',
+        title: '시맨틱(Semantic) 태그란?',
+        content: `시맨틱(semantic)은 "의미를 가진다"는 뜻입니다.
+
+<div>는 아무 의미 없는 상자지만, 시맨틱 태그는 그 안의 내용이 무엇인지 이름만 봐도 알 수 있습니다.
+
+예시:
+• <div class="header"> → 이름이 없어서 사람이 읽어야 알 수 있음
+• <header>           → 이름만 봐도 "페이지 상단"임을 즉시 알 수 있음
+
+시맨틱 태그를 쓰면:
+① 코드를 사람이 읽기 쉬워집니다 (가독성 ↑)
+② 검색 엔진(Google)이 페이지 구조를 더 잘 이해합니다 (SEO ↑)
+③ 스크린 리더(시각장애인 보조도구)가 페이지를 올바르게 읽습니다 (접근성 ↑)`,
+      },
+      { type: 'demo', demoId: '05-semantic' },
+      {
+        type: 'text',
+        title: '부모 태그 안에 자식 태그를 넣으면?',
+        content: `HTML 태그는 나무(Tree) 구조처럼 서로 감쌀 수 있습니다.
+
+바깥에 있는 태그 = 부모(Parent)
+안에 들어가는 태그 = 자식(Child)
+
+핵심 규칙:
+• 자식은 부모 영역 안에서만 표시됩니다
+• 부모에 적용된 스타일은 자식에게 상속될 수 있습니다
+• 부모가 숨겨지면 자식도 함께 숨겨집니다
+
+아래에서 실제로 어떻게 화면에 표시되는지 확인해보세요.`,
       },
       {
         type: 'code',
-        title: '레이아웃 태그',
-        code: `<header>
-  <h1>웹사이트 제목</h1>
-  <nav>
-    <a href="#home">홈</a>
-    <a href="#about">소개</a>
+        title: '부모-자식 구조 코드',
+        code: `<header>               ← 부모
+  <h1>웹사이트 제목</h1> ← 자식
+  <nav>                ← 자식이자 또 다른 부모
+    <a href="#">홈</a>   ← nav의 자식 (孫: 손자)
+    <a href="#">소개</a>
   </nav>
 </header>
 
-<main>
-  <section>
-    <h2>섹션 제목</h2>
-    <article>
-      <h3>글 제목</h3>
-      <p>글 내용...</p>
+<main>                 ← 부모
+  <section>            ← 자식
+    <article>          ← 손자
+      <h3>글 제목</h3>  ← 증손자
+      <p>글 내용</p>
     </article>
   </section>
-  
-  <aside>
-    사이드바 내용
-  </aside>
+  <aside>사이드바</aside>
 </main>
 
-<footer>
-  <p>&copy; 2026 내 웹사이트</p>
+<footer>               ← 부모
+  <p>© 2026</p>        ← 자식
 </footer>`,
         language: 'html',
       },
-      {
-        type: 'demo',
-      }
+      { type: 'demo', demoId: '05-layout' },
     ],
   },
   {

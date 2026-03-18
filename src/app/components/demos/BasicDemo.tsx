@@ -1,5 +1,101 @@
 import { useEffect, useRef, useState } from 'react';
 
+/* ───────────── 05번 슬라이드 시맨틱 태그 미리보기 ───────────── */
+
+function SemanticTagsPreview() {
+  const tags = [
+    { tag: '<header>', color: 'bg-gray-900 text-white', border: 'border-gray-900', desc: '페이지 최상단 · 로고, 내비게이션 포함', role: '헤더' },
+    { tag: '<nav>', color: 'bg-gray-700 text-white', border: 'border-gray-700', desc: '링크 목록 · 메뉴, 탭, 사이드 내비게이션', role: '내비게이션' },
+    { tag: '<main>', color: 'bg-blue-600 text-white', border: 'border-blue-600', desc: '페이지의 핵심 콘텐츠 · 페이지당 하나만', role: '메인 콘텐츠' },
+    { tag: '<section>', color: 'bg-blue-400 text-white', border: 'border-blue-400', desc: '주제별로 묶인 콘텐츠 블록', role: '섹션' },
+    { tag: '<article>', color: 'bg-sky-500 text-white', border: 'border-sky-500', desc: '독립적인 글·카드·뉴스 (혼자서도 의미 있음)', role: '아티클' },
+    { tag: '<aside>', color: 'bg-amber-500 text-white', border: 'border-amber-500', desc: '부가 정보 · 광고, 관련 링크, 사이드바', role: '사이드바' },
+    { tag: '<footer>', color: 'bg-gray-600 text-white', border: 'border-gray-600', desc: '페이지 최하단 · 저작권, 연락처', role: '푸터' },
+    { tag: '<div>', color: 'bg-gray-100 text-gray-400', border: 'border-dashed border-gray-300', desc: '의미 없는 범용 컨테이너 — 스타일/레이아웃 목적으로만 사용', role: '(의미 없음)' },
+  ];
+  return (
+    <div className="space-y-2">
+      <p className="text-xs font-mono text-gray-400 mb-3">각 태그의 역할과 위치</p>
+      {tags.map(({ tag, color, border, desc, role }) => (
+        <div key={tag} className={`flex items-start gap-3 rounded-lg border ${border} overflow-hidden`}>
+          <div className={`${color} px-3 py-2.5 font-mono text-xs font-bold whitespace-nowrap min-w-[130px] flex items-center`}>
+            {tag}
+          </div>
+          <div className="py-2.5 pr-3 flex-1 min-w-0">
+            <span className="text-xs font-semibold text-gray-700 mr-2">{role}</span>
+            <span className="text-xs text-gray-500">{desc}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function LayoutPreview() {
+  return (
+    <div className="w-full rounded-xl overflow-hidden border-2 border-gray-200 text-xs font-mono select-none">
+      {/* header */}
+      <div className="bg-gray-900 text-white px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-gray-500 border border-gray-700 rounded px-1.5 py-0.5">&lt;header&gt;</span>
+            <span className="font-bold text-sm">MyWebsite</span>
+          </div>
+          {/* nav */}
+          <div className="border border-gray-600 rounded px-2 py-1">
+            <span className="text-[10px] text-gray-500 block mb-1">&lt;nav&gt;</span>
+            <div className="flex gap-3">
+              {['홈', '소개', '연락처'].map((item) => (
+                <span key={item} className="text-white text-[11px] hover:text-orange-400 cursor-pointer transition-colors">{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* main + aside */}
+      <div className="flex gap-0 border-t-2 border-gray-200">
+        {/* main */}
+        <div className="flex-1 bg-white p-3 border-r border-gray-200">
+          <span className="text-[10px] text-blue-500 border border-blue-200 rounded px-1.5 py-0.5 bg-blue-50">&lt;main&gt;</span>
+          {/* section */}
+          <div className="mt-2 border-2 border-blue-300 rounded-lg p-3 bg-blue-50/50">
+            <span className="text-[10px] text-blue-400 border border-blue-300 rounded px-1 py-0.5 bg-white">&lt;section&gt;</span>
+            <p className="text-[11px] text-blue-700 font-semibold mt-1 mb-2">오늘의 강의</p>
+            {/* article 1 */}
+            <div className="border border-sky-300 rounded-lg p-2.5 bg-white mb-2">
+              <span className="text-[10px] text-sky-500 border border-sky-200 rounded px-1 py-0.5">&lt;article&gt;</span>
+              <h3 className="text-[12px] font-bold text-gray-800 mt-1">HTML 기초</h3>
+              <p className="text-[10px] text-gray-500 mt-0.5">태그의 구조와 의미를 이해합니다.</p>
+            </div>
+            {/* article 2 */}
+            <div className="border border-sky-300 rounded-lg p-2.5 bg-white">
+              <span className="text-[10px] text-sky-500 border border-sky-200 rounded px-1 py-0.5">&lt;article&gt;</span>
+              <h3 className="text-[12px] font-bold text-gray-800 mt-1">CSS 레이아웃</h3>
+              <p className="text-[10px] text-gray-500 mt-0.5">Flexbox로 배치를 잡습니다.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* aside */}
+        <div className="w-36 bg-amber-50 p-3 border-l border-amber-200">
+          <span className="text-[10px] text-amber-600 border border-amber-300 rounded px-1.5 py-0.5 bg-white">&lt;aside&gt;</span>
+          <p className="text-[11px] font-semibold text-amber-700 mt-2 mb-1.5">관련 링크</p>
+          {['MDN Docs', 'W3Schools', 'CSS Tricks'].map((link) => (
+            <p key={link} className="text-[10px] text-amber-600 underline cursor-pointer mb-1">→ {link}</p>
+          ))}
+        </div>
+      </div>
+
+      {/* footer */}
+      <div className="bg-gray-700 text-gray-300 px-4 py-2.5 flex items-center justify-between border-t-2 border-gray-200">
+        <span className="text-[10px] text-gray-500 border border-gray-600 rounded px-1.5 py-0.5">&lt;footer&gt;</span>
+        <span className="text-[11px]">© 2026 MyWebsite. All rights reserved.</span>
+      </div>
+    </div>
+  );
+}
+
 /* ───────────── 10번 슬라이드 개별 미리보기 ───────────── */
 
 function TransitionPreview() {
@@ -236,6 +332,8 @@ function PaginationPreview() {
 }
 
 const demoComponents: Record<string, JSX.Element> = {
+  '05-semantic':     <SemanticTagsPreview />,
+  '05-layout':       <LayoutPreview />,
   '10-transition':   <TransitionPreview />,
   '10-animation':    <AnimationPreview />,
   '10-transform':    <TransformPreview />,
@@ -303,36 +401,6 @@ export function BasicDemo({ slideId, demoId }: { slideId: string; demoId?: strin
             <p className="text-sm text-gray-600 mt-2">이미지 alt 속성: "코딩 이미지"</p>
           </div>
         </div>
-      </div>
-    ),
-    '05': (
-      <div className="bg-white rounded-xl p-8 border-2 border-orange-200">
-        <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg mb-6">
-          <h1 className="text-2xl font-bold mb-2">웹사이트 제목 (header)</h1>
-          <nav className="flex gap-4">
-            <a href="#" className="hover:underline">홈</a>
-            <a href="#" className="hover:underline">소개</a>
-            <a href="#" className="hover:underline">연락처</a>
-          </nav>
-        </header>
-        
-        <main>
-          <section className="mb-6 bg-gray-50 p-4 rounded-lg">
-            <h2 className="text-xl font-bold mb-2 text-gray-800">섹션 제목 (section)</h2>
-            <article className="bg-white p-4 rounded border border-gray-200">
-              <h3 className="font-semibold mb-2 text-gray-700">글 제목 (article)</h3>
-              <p className="text-gray-600">글 내용이 여기에 들어갑니다...</p>
-            </article>
-          </section>
-          
-          <aside className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300">
-            <p className="text-sm text-gray-700">사이드바 내용 (aside)</p>
-          </aside>
-        </main>
-        
-        <footer className="mt-6 bg-gray-800 text-white p-4 rounded-lg text-center">
-          <p className="text-sm">&copy; 2026 내 웹사이트 (footer)</p>
-        </footer>
       </div>
     ),
     '06': (
