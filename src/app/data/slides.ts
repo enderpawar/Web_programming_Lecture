@@ -304,6 +304,50 @@ button:active {
     ],
   },
   {
+    id: '06-attr',
+    title: 'id / class 속성 추가',
+    description: '태그 안에 id와 class를 넣고 CSS로 선택하는 방법을 배웁니다',
+    category: '#06',
+    sections: [
+      {
+        type: 'text',
+        title: '핵심 규칙',
+        content: `id는 보통 "페이지에서 유일"하게, class는 "여러 요소가 공유"할 수 있게 사용합니다.
+
+- id: id="값"  (CSS에서 #id값)
+- class: class="값"  (CSS에서 .class값)
+
+한 태그에 class를 여러 개 넣을 땐 class="btn primary"처럼 공백으로 구분합니다.`,
+      },
+      {
+        type: 'code',
+        title: 'HTML 예시',
+        code: `<h2 id="section-title" class="title">제목</h2>
+<button id="submit-btn" class="btn primary">제출</button>
+<p class="text-bold">중요한 문장</p>`,
+        language: 'html',
+      },
+      {
+        type: 'code',
+        title: 'CSS로 선택하기',
+        code: `#section-title {
+  color: orange;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.btn.primary {
+  padding: 10px 16px;
+  background: #111827;
+  color: white;
+}`,
+        language: 'css',
+      },
+    ],
+  },
+  {
     id: '07',
     title: 'CSS 박스 모델',
     description: 'margin, padding, border의 개념을 이해합니다',
